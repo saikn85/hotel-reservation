@@ -1,6 +1,6 @@
 package common;
 
-public enum MenOptions {
+public enum MainMenOptions {
     CUSTOMER,
     ADMIN,
     EXIT,

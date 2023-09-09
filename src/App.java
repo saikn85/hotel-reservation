@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import common.MenOptions;
+import common.MainMenOptions;
 import common.MenuOptionsHelpers;
 import common.PatternPrinter;
 
@@ -13,7 +13,7 @@ public class App {
      */
     private static void runApplication() {
         Scanner scanner = new Scanner(System.in);
-        MenOptions userOption = MenOptions.EXIT;
+        MainMenOptions userOption = MainMenOptions.EXIT;
 
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
@@ -31,27 +31,28 @@ public class App {
                 switch (Integer.parseInt(scanner.next())) {
                     case 1:
                         System.out.println("Customer Menu");
-                        userOption = MenOptions.CUSTOMER;
+                        userOption = MainMenOptions.CUSTOMER;
                         break;
                     case 2:
                         System.out.println("Admin Menu");
-                        userOption = MenOptions.ADMIN;
+                        userOption = MainMenOptions.ADMIN;
                         break;
                     default:
                         System.out.println("exiting");
-                        userOption = MenOptions.EXIT;
+                        scanner.close();
+                        userOption = MainMenOptions.EXIT;
                         break;
                 }
             } catch (NumberFormatException ex) {
-                userOption = MenOptions.TRYAGAIN;
-                System.out.println(MenuOptionsHelpers.getSelectionOptLength());
+                userOption = MainMenOptions.TRYAGAIN;
+                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
                 System.out.println("Invalid Option Specified, try again.");
-                System.out.println(MenuOptionsHelpers.getSelectionOptLength());
+                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
             } catch (Exception e) {
                 System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
                 scanner.close();
                 return;
             }
-        } while (userOption != MenOptions.EXIT);
+        } while (userOption != MainMenOptions.EXIT);
     }
 }
