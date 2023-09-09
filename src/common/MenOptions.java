@@ -3,5 +3,6 @@ package common;
 public enum MenOptions {
     CUSTOMER,
     ADMIN,
-    EXIT
+    EXIT,
+    TRYAGAIN
 }

@@ -15,24 +15,43 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         MenOptions userOption = MenOptions.EXIT;
 
-        try {
-            PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
-            PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
-            System.out.println(MenuOptionsHelpers.getMainMenuOptionHelper());
-            PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
-            PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
-            do {
+        PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+        PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+        System.out.println(MenuOptionsHelpers.getMainMenuOptionHelper());
+        PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+        PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+
+        do {
+            try {
+                System.out.println();
                 System.out.println("1.\tCustomer Menu");
                 System.out.println("2.\tAdministrative Menu");
                 System.out.println("3.\tExit");
                 System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
-                String selectedOption = scanner.next();
-
-            } while (userOption != MenOptions.EXIT);
-        } catch (Exception e) {
-            System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
-            scanner.close();
-            return;
-        }
+                switch (Integer.parseInt(scanner.next())) {
+                    case 1:
+                        System.out.println("Customer Menu");
+                        userOption = MenOptions.CUSTOMER;
+                        break;
+                    case 2:
+                        System.out.println("Admin Menu");
+                        userOption = MenOptions.ADMIN;
+                        break;
+                    default:
+                        System.out.println("exiting");
+                        userOption = MenOptions.EXIT;
+                        break;
+                }
+            } catch (NumberFormatException ex) {
+                userOption = MenOptions.TRYAGAIN;
+                System.out.println(MenuOptionsHelpers.getSelectionOptLength());
+                System.out.println("Invalid Option Specified, try again.");
+                System.out.println(MenuOptionsHelpers.getSelectionOptLength());
+            } catch (Exception e) {
+                System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
+                scanner.close();
+                return;
+            }
+        } while (userOption != MenOptions.EXIT);
     }
 }
