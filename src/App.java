@@ -45,8 +45,11 @@ public class App {
                 }
             } catch (NumberFormatException ex) {
                 userOption = MainMenOptions.TRYAGAIN;
+                System.out.println();
                 PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                System.out.println();
                 System.out.println("Invalid Option Specified, try again.");
+                System.out.println();
                 PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
             } catch (Exception e) {
                 System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
