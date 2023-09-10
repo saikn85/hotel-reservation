@@ -30,17 +30,16 @@ public class App {
                 System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
                 switch (Integer.parseInt(scanner.next())) {
                     case 1:
-                        System.out.println("Customer Menu");
+
                         userOption = MainMenOptions.CUSTOMER;
                         break;
                     case 2:
-                        System.out.println("Admin Menu");
                         userOption = MainMenOptions.ADMIN;
                         break;
                     default:
-                        System.out.println("exiting");
                         scanner.close();
                         userOption = MainMenOptions.EXIT;
+                        System.out.println("exiting");
                         break;
                 }
             } catch (NumberFormatException ex) {
@@ -48,7 +47,7 @@ public class App {
                 System.out.println();
                 PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
                 System.out.println();
-                System.out.println("Invalid Option Specified, try again.");
+                System.out.println("Invalid option specified, try again.");
                 System.out.println();
                 PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
             } catch (Exception e) {
@@ -57,5 +56,7 @@ public class App {
                 return;
             }
         } while (userOption != MainMenOptions.EXIT);
+
+        return;
     }
 }
