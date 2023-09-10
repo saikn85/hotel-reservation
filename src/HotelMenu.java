@@ -13,9 +13,7 @@ import models.room.IRoom;
 import models.room.Room;
 
 public class HotelMenu {
-
     private static final HotelResource _hotelResource = HotelResource.getHotelResource();
-    Scanner _scanner = new Scanner(System.in);
 
     public HotelMenu() {
         super();
@@ -23,62 +21,64 @@ public class HotelMenu {
 
     public MainMenuOptions hotelMenuOptions() {
         int userOption = 0;
-        do {
-            try {
-                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
-                System.out.println();
-                System.out.println("Hotel Services Menu");
-                System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
-                System.out.println();
-                System.out.println("1.\tFind and reserve a room");
-                System.out.println("2.\tSee my reservations");
-                System.out.println("3.\tCreate an Account");
-                System.out.println("4.\tBack to Main Menu");
-                System.out.println("5.\tExit Application");
-                System.out.println();
-                System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
-                switch (Integer.parseInt(_scanner.next())) {
-                    case 1:
-                        userOption = 1;
-                        this.findRooms();
-                        break;
-                    case 2:
-                        userOption = 2;
-                        this.getMyReservations();
-                        break;
-                    case 3:
-                        userOption = 3;
-                        this.createUserAccount();
-                        break;
-                    case 4:
-                        userOption = 4;
-                        break;
-                    case 5:
-                        userOption = 5;
-                        break;
-                    default:
-                        System.out.println();
-                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                        System.out.println();
-                        System.out.println("Invalid option specified, try again.");
-                        System.out.println();
-                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                        break;
+        try (Scanner scanner = new Scanner(System.in)) {
+            do {
+                try {
+                    PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+                    System.out.println();
+                    System.out.println("Hotel Services Menu");
+                    System.out.println();
+                    PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+                    System.out.println();
+                    System.out.println("1.\tFind and reserve a room");
+                    System.out.println("2.\tSee my reservations");
+                    System.out.println("3.\tCreate an Account");
+                    System.out.println("4.\tBack to Main Menu");
+                    System.out.println("5.\tExit Application");
+                    System.out.println();
+                    System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
+                    switch (Integer.parseInt(scanner.next())) {
+                        case 1:
+                            userOption = 1;
+                            this.findRooms(scanner);
+                            break;
+                        case 2:
+                            userOption = 2;
+                            this.getMyReservations(scanner);
+                            break;
+                        case 3:
+                            userOption = 3;
+                            this.createUserAccount(scanner);
+                            break;
+                        case 4:
+                            userOption = 4;
+                            break;
+                        case 5:
+                            userOption = 5;
+                            break;
+                        default:
+                            System.out.println();
+                            PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                            System.out.println();
+                            System.out.println("Invalid option specified, try again.");
+                            System.out.println();
+                            PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                            break;
+                    }
+                } catch (NumberFormatException ex) {
+                    userOption = 0;
+                    System.out.println();
+                    PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                    System.out.println();
+                    System.out.println("Invalid option specified, try again.");
+                    System.out.println();
+                    PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                } catch (Exception e) {
+                    System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
+                    userOption = 5; // Break away from Unknown Exception
                 }
-            } catch (NumberFormatException ex) {
-                userOption = 0;
-                System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                System.out.println();
-                System.out.println("Invalid option specified, try again.");
-                System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-            } catch (Exception e) {
-                System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
-                userOption = 5; // Break away from Unknown Exception
-            }
-        } while (userOption != 4 && userOption != 5);
+            } while (userOption != 4 && userOption != 5);
+        }
 
         if (userOption == 4)
             return MainMenuOptions.TRYAGAIN;
@@ -88,39 +88,38 @@ public class HotelMenu {
 
     // #region findRooms
 
-    private void findRooms() {
+    private void findRooms(final Scanner scanner) {
         System.out.println();
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Enter Check-In Date mm/dd/yyyy example 02/01/2020: ");
-            Date checkIn = this.getInputDate(scanner);
 
-            System.out.print("\nEnter Check-Out Date mm/dd/yyyy example 02/21/2020: ");
-            Date checkOut = this.getInputDate(scanner);
+        System.out.print("Enter Check-In Date mm/dd/yyyy example 02/01/2020: ");
+        Date checkIn = this.getInputDate(scanner);
 
-            if (checkIn != null && checkOut != null) {
-                Collection<IRoom> availableRooms = _hotelResource.findRoom(checkIn, checkOut);
+        System.out.print("\nEnter Check-Out Date mm/dd/yyyy example 02/21/2020: ");
+        Date checkOut = this.getInputDate(scanner);
 
-                if (availableRooms.isEmpty()) {
-                    System.out.println();
-                    System.out.println("Searching for Alternative rooms...");
-                    Collection<IRoom> alternativeRooms = _hotelResource.findAlternativeRooms(checkIn, checkOut);
-                    if (alternativeRooms.isEmpty()) {
-                        this.searchAheadDays(scanner, checkIn, checkOut);
-                    } else {
-                        final Date alternativeCheckIn = _hotelResource.getNextAlternateDate(checkIn);
-                        final Date alternativeCheckOut = _hotelResource.getNextAlternateDate(checkOut);
-                        System.out.println();
-                        System.out.println("We've only found rooms on alternative dates:" +
-                                "\nCheck-In Date:" + alternativeCheckIn +
-                                "\nCheck-Out Date:" + alternativeCheckOut);
+        if (checkIn != null && checkOut != null) {
+            Collection<IRoom> availableRooms = _hotelResource.findRoom(checkIn, checkOut);
 
-                        this.showRooms(alternativeRooms);
-                        this.makeReservation(scanner, alternativeCheckIn, alternativeCheckOut, alternativeRooms);
-                    }
+            if (availableRooms.isEmpty()) {
+                System.out.println();
+                System.out.println("Searching for Alternative rooms... ");
+                Collection<IRoom> alternativeRooms = _hotelResource.findAlternativeRooms(checkIn, checkOut);
+                if (alternativeRooms.isEmpty()) {
+                    this.searchAheadDays(scanner, checkIn, checkOut);
                 } else {
-                    this.showRooms(availableRooms);
-                    this.makeReservation(scanner, checkIn, checkOut, availableRooms);
+                    final Date alternativeCheckIn = _hotelResource.getNextAlternateDate(checkIn);
+                    final Date alternativeCheckOut = _hotelResource.getNextAlternateDate(checkOut);
+                    System.out.println();
+                    System.out.println("We've only found rooms on alternative dates:" +
+                            "\nCheck-In Date:" + alternativeCheckIn +
+                            "\nCheck-Out Date:" + alternativeCheckOut);
+
+                    this.showRooms(alternativeRooms);
+                    this.makeReservation(scanner, alternativeCheckIn, alternativeCheckOut, alternativeRooms);
                 }
+            } else {
+                this.showRooms(availableRooms);
+                this.makeReservation(scanner, checkIn, checkOut, availableRooms);
             }
         }
     }
@@ -246,19 +245,17 @@ public class HotelMenu {
 
     // #region getMyReservations
 
-    private void getMyReservations() {
+    private void getMyReservations(final Scanner scanner) {
         System.out.println();
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Enter your Email format: name@domain.com: ");
-            final String customerEmail = scanner.next();
-            final Collection<Reservation> reservations = _hotelResource.getCustomersReservations(customerEmail);
+        System.out.print("Enter your Email format: name@domain.com: ");
+        final String customerEmail = scanner.next();
+        final Collection<Reservation> reservations = _hotelResource.getCustomersReservations(customerEmail);
 
-            if (reservations == null || reservations.isEmpty()) {
-                System.out.println("No reservations found.");
-            } else {
-                for (Reservation reservation : reservations) {
-                    System.out.println(reservation);
-                }
+        if (reservations == null || reservations.isEmpty()) {
+            System.out.println("No reservations found.");
+        } else {
+            for (Reservation reservation : reservations) {
+                System.out.println(reservation);
             }
         }
     }
@@ -267,25 +264,23 @@ public class HotelMenu {
 
     // #region createUserAccount
 
-    private void createUserAccount() {
+    private void createUserAccount(Scanner scanner) {
         System.out.println();
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Enter Email format: name@domain.com: ");
-            final String email = scanner.next();
+        System.out.print("Enter Email format: name@domain.com: ");
+        final String email = scanner.next();
 
-            System.out.println("First Name:");
-            final String firstName = scanner.nextLine();
+        System.out.println("First Name:");
+        final String firstName = scanner.nextLine();
 
-            System.out.println("Last Name:");
-            final String lastName = scanner.nextLine();
+        System.out.println("Last Name:");
+        final String lastName = scanner.nextLine();
 
-            try {
-                _hotelResource.newCustomer(email, firstName, lastName);
-                System.out.println("Account created successfully!");
-            } catch (IllegalArgumentException ex) {
-                System.out.println(ex.getLocalizedMessage());
-                this.createUserAccount();
-            }
+        try {
+            _hotelResource.newCustomer(email, firstName, lastName);
+            System.out.println("Account created successfully!");
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getLocalizedMessage());
+            this.createUserAccount(scanner);
         }
     }
 
@@ -298,7 +293,7 @@ public class HotelMenu {
             return new SimpleDateFormat("MM/dd/yyyy").parse(scanner.next());
         } catch (ParseException ex) {
             System.out.println("Error: Invalid date.");
-            this.findRooms();
+            this.findRooms(scanner);
         }
 
         return null;
