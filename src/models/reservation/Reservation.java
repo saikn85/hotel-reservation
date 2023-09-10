@@ -10,8 +10,12 @@ import models.room.Room;
 
 public class Reservation {
 
-    private static int _maxCustomerLenght = 0;
-    private static int _maxRoomLength = 0;
+    // #region Static Setup
+
+    private static String _reservationFormat = "%" + Customer.getMaxCustomerLenght() + "s | %"
+            + Room.getMaxRoomLength() + "s | %s | %s";
+
+    // #endregion
 
     private final Customer _customer;
     private final IRoom _room;
@@ -26,8 +30,6 @@ public class Reservation {
         this._room = room;
         this._checkInDate = checkInDate;
         this._checkOutDate = checkOutDate;
-
-        this.computeLength();
     }
 
     // #region Getters
@@ -50,8 +52,8 @@ public class Reservation {
 
     @Override
     public String toString() {
-        String format = "%" + Reservation._maxCustomerLenght + "s | %" + Reservation._maxRoomLength + "s | %s | %s";
-        return String.format(format, this._customer, this._room, Reservation.getFormattedDate(this._checkInDate),
+        return String.format(Reservation._reservationFormat, this._customer, this._room,
+                Reservation.getFormattedDate(this._checkInDate),
                 Reservation.getFormattedDate(this._checkOutDate));
     }
 
@@ -59,17 +61,8 @@ public class Reservation {
 
     // #region Pirvate Helpers
 
-    private void computeLength() {
-        if (Customer.getMaxCustomerLenght() > _maxCustomerLenght)
-            Reservation._maxCustomerLenght = Customer.getMaxCustomerLenght();
-
-        if (Room.getMaxRoomLength() > _maxRoomLength)
-            Reservation._maxRoomLength = Room.getMaxRoomLength();
-    }
-
     private static String getFormattedDate(final Date date) {
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-        return df.format(date);
+        return new SimpleDateFormat("yyyy-mm-dd").format(date);
     }
 
     // #endregion
