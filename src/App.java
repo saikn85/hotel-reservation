@@ -22,6 +22,7 @@ public class App {
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
 
         HotelMenu customerMenu = new HotelMenu(scanner);
+        AdministrativeMenu adminMenu = new AdministrativeMenu(scanner);
 
         do {
             try {
@@ -35,7 +36,7 @@ public class App {
                         userOption = customerMenu.hotelMenuOptions();
                         break;
                     case 2:
-                        userOption = MainMenuOptions.ADMIN;
+                        userOption = adminMenu.adminMenuOptions();
                         break;
                     case 3:
                         scanner.close();
