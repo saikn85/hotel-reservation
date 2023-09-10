@@ -13,8 +13,8 @@ import services.reservation.ReservationService;
 public class HotelResource {
     private static final HotelResource SINGLETON = new HotelResource();
 
-    private final CustomerService customerService = CustomerService.getCustomerService();
-    private final ReservationService reservationService = ReservationService.getReservationService();
+    private final CustomerService _customerService = CustomerService.getCustomerService();
+    private final ReservationService _reservationService = ReservationService.getReservationService();
 
     private HotelResource() {
     }
@@ -24,19 +24,19 @@ public class HotelResource {
     }
 
     public Customer getCustomer(String email) {
-        return customerService.getCustomer(email);
+        return _customerService.getCustomer(email);
     }
 
     public void newCustomer(String email, String firstName, String lastName) {
-        customerService.addCustomer(email, firstName, lastName);
+        _customerService.addCustomer(email, firstName, lastName);
     }
 
     public IRoom getRoom(String roomNumber) {
-        return reservationService.getARoom(roomNumber);
+        return _reservationService.getARoom(roomNumber);
     }
 
     public Reservation bookRoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
-        return reservationService.reserveRoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
+        return _reservationService.reserveRoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
     }
 
     public Collection<Reservation> getCustomersReservations(String customerEmail) {
@@ -46,27 +46,31 @@ public class HotelResource {
             return Collections.emptyList();
         }
 
-        return reservationService.getAllCustomerReservations(getCustomer(customerEmail));
+        return _reservationService.getAllCustomerReservations(getCustomer(customerEmail));
     }
 
     public Collection<IRoom> findRoom(final Date checkIn, final Date checkOut) {
-        return reservationService.findRooms(checkIn, checkOut);
+        return _reservationService.findRooms(checkIn, checkOut);
     }
 
     public Collection<IRoom> findAlternativeRooms(final Date checkIn, final Date checkOut) {
-        return reservationService.findAlternateRooms(checkIn, checkOut);
+        return _reservationService.findAlternateRooms(checkIn, checkOut);
     }
 
     public Collection<IRoom> findAlternativeRooms(final Date checkIn, final Date checkOut,
             final int extendedSearchDays) {
-        return reservationService.findAlternateRooms(checkIn, checkOut, extendedSearchDays);
+        return _reservationService.findAlternateRooms(checkIn, checkOut, extendedSearchDays);
     }
 
     public Date getNextAlternateDate(final Date date) {
-        return reservationService.getNextAlternateDate(date);
+        return _reservationService.getNextAlternateDate(date);
     }
 
     public Date getNextAlternateDate(final Date date, final int extendedSearchDays) {
-        return reservationService.getNextAlternateDate(date, extendedSearchDays);
+        return _reservationService.getNextAlternateDate(date, extendedSearchDays);
+    }
+
+    public Collection<Reservation> getAllReservations() {
+        return _reservationService.getAllReservations();
     }
 }

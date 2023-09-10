@@ -6,6 +6,7 @@ import common.MainMenuOptions;
 import common.MenuOptionsHelpers;
 import common.PatternPrinter;
 import models.customer.Customer;
+import models.reservation.Reservation;
 import models.room.IRoom;
 import models.room.Room;
 import models.room.enums.RoomType;
@@ -142,7 +143,23 @@ public class AdministrativeMenu {
     // #region listAllReservations
 
     private void listAllReservations() {
-        _adminResource.displayAllReservations();
+        Collection<Reservation> reservations = _adminResource.getAllReservations();
+
+        if (reservations.isEmpty()) {
+            System.out.println("No Reservations found.");
+        } else {
+            System.out.println();
+            System.out.println(String.format(Reservation.getReservationFormat(), "Customer Details",
+                    "Room Details", "Check-In Date", "Check-Out Date"));
+            PatternPrinter.printStars(Reservation.getMaxReservationLenght());
+            for (Reservation reservation : reservations) {
+                System.out.println(reservation);
+            }
+
+            System.out.println();
+            PatternPrinter.printStars(Room.getMaxRoomLength());
+            System.out.println();
+        }
     }
 
     // #endregion

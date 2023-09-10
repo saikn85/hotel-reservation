@@ -71,18 +71,6 @@ public class ReservationService {
         return reservations.get(customer.getEmail());
     }
 
-    public void printAllReservation() {
-        final Collection<Reservation> reservations = getAllReservations();
-
-        if (reservations.isEmpty()) {
-            System.out.println("No reservations found.");
-        } else {
-            for (Reservation reservation : reservations) {
-                System.out.println(reservation + "\n");
-            }
-        }
-    }
-
     public Date getNextAlternateDate(final Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -97,6 +85,16 @@ public class ReservationService {
         calendar.add(Calendar.DATE, extendedSearchDays);
 
         return calendar.getTime();
+    }
+
+    public Collection<Reservation> getAllReservations() {
+        final Collection<Reservation> allReservations = new ArrayList<>();
+
+        for (Collection<Reservation> reservations : reservations.values()) {
+            allReservations.addAll(reservations);
+        }
+
+        return allReservations;
     }
 
     // #region Private Helpers
@@ -126,16 +124,6 @@ public class ReservationService {
             final Date checkOutDate) {
         return checkInDate.before(reservation.getCheckOutDate())
                 && checkOutDate.after(reservation.getCheckInDate());
-    }
-
-    private Collection<Reservation> getAllReservations() {
-        final Collection<Reservation> allReservations = new ArrayList<>();
-
-        for (Collection<Reservation> reservations : reservations.values()) {
-            allReservations.addAll(reservations);
-        }
-
-        return allReservations;
     }
 
     // #endregion
