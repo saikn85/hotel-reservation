@@ -12,6 +12,8 @@ public class Customer {
     private final String _email;
 
     public Customer(final String firstName, final String lastName, final String email) {
+        super();
+        
         this._firstName = firstName;
         this._lastName = lastName;
         this._email = email;

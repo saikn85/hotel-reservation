@@ -21,6 +21,8 @@ public class App {
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
 
+        HotelMenu customerMenu = new HotelMenu(scanner);
+
         do {
             try {
                 System.out.println();
@@ -30,16 +32,24 @@ public class App {
                 System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
                 switch (Integer.parseInt(scanner.next())) {
                     case 1:
-
-                        userOption = MainMenuOptions.CUSTOMER;
+                        userOption = customerMenu.hotelMenuOptions();
                         break;
                     case 2:
                         userOption = MainMenuOptions.ADMIN;
                         break;
-                    default:
+                    case 3:
                         scanner.close();
                         userOption = MainMenuOptions.EXIT;
                         System.out.println("Exited");
+                        break;
+                    default:
+                        userOption = MainMenuOptions.TRYAGAIN;
+                        System.out.println();
+                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                        System.out.println();
+                        System.out.println("Invalid option specified, try again.");
+                        System.out.println();
+                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
                         break;
                 }
             } catch (NumberFormatException ex) {

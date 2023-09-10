@@ -13,6 +13,8 @@ public class Room implements IRoom {
     private final RoomType _roomType;
 
     public Room(final String roomNumber, final Double price, final RoomType roomType) {
+        super();
+
         this._roomNumber = roomNumber;
         this._price = price;
         this._roomType = roomType;

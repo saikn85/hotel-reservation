@@ -26,7 +26,7 @@ public class ReservationService {
     }
 
     public void addRoom(final IRoom room) {
-        rooms.put(room.get_roomNumber(), room);
+        rooms.put(room.getRoomNumber(), room);
     }
 
     public IRoom getARoom(final String roomNumber) {
@@ -48,7 +48,7 @@ public class ReservationService {
         }
 
         customerReservations.add(reservation);
-        reservations.put(customer.get_email(), customerReservations);
+        reservations.put(customer.getEmail(), customerReservations);
 
         return reservation;
     }
@@ -58,17 +58,17 @@ public class ReservationService {
     }
 
     public Collection<IRoom> findAlternateRooms(final Date checkInDate, final Date checkOutDate) {
-        return findAllAvailableRooms(addDefaultPlusDays(checkInDate), addDefaultPlusDays(checkOutDate));
+        return findAllAvailableRooms(getNextAlternateDate(checkInDate), getNextAlternateDate(checkOutDate));
     }
 
     public Collection<IRoom> findAlternateRooms(final Date checkInDate, final Date checkOutDate,
             final int extendedSearchDays) {
-        return findAllAvailableRooms(addExtendedSearchDays(checkInDate, extendedSearchDays),
-                addExtendedSearchDays(checkOutDate, extendedSearchDays));
+        return findAllAvailableRooms(getNextAlternateDate(checkInDate, extendedSearchDays),
+                getNextAlternateDate(checkOutDate, extendedSearchDays));
     }
 
     public Collection<Reservation> getAllCustomerReservations(final Customer customer) {
-        return reservations.get(customer.get_email());
+        return reservations.get(customer.getEmail());
     }
 
     public void printAllReservation() {
@@ -83,6 +83,22 @@ public class ReservationService {
         }
     }
 
+    public Date getNextAlternateDate(final Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, SEARCH_AHEAD_DAYS);
+
+        return calendar.getTime();
+    }
+
+    public Date getNextAlternateDate(final Date date, final int extendedSearchDays) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, extendedSearchDays);
+
+        return calendar.getTime();
+    }
+
     // #region Private Helpers
 
     private Collection<IRoom> findAllAvailableRooms(final Date checkInDate, final Date checkOutDate) {
@@ -92,7 +108,7 @@ public class ReservationService {
 
         for (Reservation reservation : allReservations) {
             if (checkForReservationOverlaps(reservation, checkInDate, checkOutDate)) {
-                roomsNotAvailable.add(reservation.get_room());
+                roomsNotAvailable.add(reservation.getRoom());
             }
         }
 
@@ -106,26 +122,10 @@ public class ReservationService {
         return roomsAvailable;
     }
 
-    private Date addDefaultPlusDays(final Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, SEARCH_AHEAD_DAYS);
-
-        return calendar.getTime();
-    }
-
-    private Date addExtendedSearchDays(final Date date, final int extendedSearchDays) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, extendedSearchDays);
-
-        return calendar.getTime();
-    }
-
     private boolean checkForReservationOverlaps(final Reservation reservation, final Date checkInDate,
             final Date checkOutDate) {
-        return checkInDate.before(reservation.get_checkOutDate())
-                && checkOutDate.after(reservation.get_checkInDate());
+        return checkInDate.before(reservation.getCheckOutDate())
+                && checkOutDate.after(reservation.getCheckInDate());
     }
 
     private Collection<Reservation> getAllReservations() {
