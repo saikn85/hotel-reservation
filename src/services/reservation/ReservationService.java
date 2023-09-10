@@ -26,7 +26,7 @@ public class ReservationService {
     }
 
     public void addRoom(final IRoom room) {
-        rooms.put(room.getRoomNumber(), room);
+        rooms.put(room.get_roomNumber(), room);
     }
 
     public IRoom getARoom(final String roomNumber) {
@@ -48,7 +48,7 @@ public class ReservationService {
         }
 
         customerReservations.add(reservation);
-        reservations.put(customer.getEmail(), customerReservations);
+        reservations.put(customer.get_email(), customerReservations);
 
         return reservation;
     }
@@ -68,7 +68,7 @@ public class ReservationService {
     }
 
     public Collection<Reservation> getAllCustomerReservations(final Customer customer) {
-        return reservations.get(customer.getEmail());
+        return reservations.get(customer.get_email());
     }
 
     public void printAllReservation() {
@@ -92,7 +92,7 @@ public class ReservationService {
 
         for (Reservation reservation : allReservations) {
             if (checkForReservationOverlaps(reservation, checkInDate, checkOutDate)) {
-                roomsNotAvailable.add(reservation.getRoom());
+                roomsNotAvailable.add(reservation.get_room());
             }
         }
 
@@ -124,8 +124,8 @@ public class ReservationService {
 
     private boolean checkForReservationOverlaps(final Reservation reservation, final Date checkInDate,
             final Date checkOutDate) {
-        return checkInDate.before(reservation.getCheckOutDate())
-                && checkOutDate.after(reservation.getCheckInDate());
+        return checkInDate.before(reservation.get_checkOutDate())
+                && checkOutDate.after(reservation.get_checkInDate());
     }
 
     private Collection<Reservation> getAllReservations() {

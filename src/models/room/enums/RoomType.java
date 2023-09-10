@@ -16,6 +16,6 @@ public enum RoomType {
                 return roomType;
             }
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Invalid Room Type");
     }
 }

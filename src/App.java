@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import common.MainMenOptions;
+import common.MainMenuOptions;
 import common.MenuOptionsHelpers;
 import common.PatternPrinter;
 
@@ -13,7 +13,7 @@ public class App {
      */
     private static void runApplication() {
         Scanner scanner = new Scanner(System.in);
-        MainMenOptions userOption = MainMenOptions.EXIT;
+        MainMenuOptions userOption = MainMenuOptions.EXIT;
 
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
@@ -31,19 +31,19 @@ public class App {
                 switch (Integer.parseInt(scanner.next())) {
                     case 1:
 
-                        userOption = MainMenOptions.CUSTOMER;
+                        userOption = MainMenuOptions.CUSTOMER;
                         break;
                     case 2:
-                        userOption = MainMenOptions.ADMIN;
+                        userOption = MainMenuOptions.ADMIN;
                         break;
                     default:
                         scanner.close();
-                        userOption = MainMenOptions.EXIT;
+                        userOption = MainMenuOptions.EXIT;
                         System.out.println("Exited");
                         break;
                 }
             } catch (NumberFormatException ex) {
-                userOption = MainMenOptions.TRYAGAIN;
+                userOption = MainMenuOptions.TRYAGAIN;
                 System.out.println();
                 PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
                 System.out.println();
@@ -55,7 +55,7 @@ public class App {
                 scanner.close();
                 return;
             }
-        } while (userOption != MainMenOptions.EXIT);
+        } while (userOption != MainMenuOptions.EXIT);
 
         return;
     }
