@@ -153,29 +153,32 @@ public class AdministrativeMenu {
     // #region addNewRoom
 
     private void addNewRoom() {
-        System.out.println("Enter room number:");
-        final String roomNumber = this._scanner.nextLine();
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Enter room number:");
+            final String roomNumber = scanner.nextLine();
 
-        System.out.println("Enter price per night:");
-        final double roomPrice = this.parseRoomPrice();
+            System.out.println("Enter price per night:");
+            final double roomPrice = this.parseRoomPrice(scanner);
 
-        System.out.println("Enter room type: 1 for single bed, 2 for double bed:");
-        final RoomType roomType = this.parseRoomType();
+            System.out.println("Enter room type: 1 for single bed, 2 for double bed:");
+            final RoomType roomType = this.parseRoomType(scanner);
 
-        final Room room = new Room(roomNumber, roomPrice, roomType);
-        _adminResource.addRoom(room);
+            final Room room = new Room(roomNumber, roomPrice, roomType);
+            _adminResource.addRoom(room);
+        }
+
         System.out.println("Room added successfully!");
     }
 
     // #region parseRoomPrice
 
-    private double parseRoomPrice() {
+    private double parseRoomPrice(final Scanner scanner) {
         try {
-            return Double.parseDouble(this._scanner.nextLine());
+            return Double.parseDouble(scanner.nextLine());
         } catch (NumberFormatException exp) {
             System.out.println("Enter a valid double number. " +
                     "Decimal digits must be separated by point (.)");
-            return parseRoomPrice();
+            return parseRoomPrice(scanner);
         }
     }
 
@@ -183,12 +186,12 @@ public class AdministrativeMenu {
 
     // #region parseRoomType
 
-    private RoomType parseRoomType() {
+    private RoomType parseRoomType(final Scanner scanner) {
         try {
-            return RoomType.valueOfLabel(this._scanner.nextLine());
+            return RoomType.valueOfLabel(scanner.nextLine());
         } catch (IllegalArgumentException exp) {
             System.out.println("Invalid room type! Please, choose 1 for single bed or 2 for double bed:");
-            return parseRoomType();
+            return parseRoomType(scanner);
         }
     }
 

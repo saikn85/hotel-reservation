@@ -32,18 +32,24 @@ public class HotelMenu {
                 System.out.println("4.\tBack to Main Menu");
                 System.out.println("5.\tExit Application");
                 System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
-                switch (Integer.parseInt(_scanner.next())) {
+                switch (Integer.parseInt(this._scanner.next())) {
                     case 1:
+                        userOption = 1;
                         this.findRooms();
                         break;
                     case 2:
+                        userOption = 2;
                         this.getMyReservations();
                         break;
                     case 3:
+                        userOption = 3;
                         this.createUserAccount();
                         break;
                     case 4:
+                        userOption = 4;
+                        break;
                     case 5:
+                        userOption = 5;
                         break;
                     default:
                         System.out.println();
@@ -179,15 +185,17 @@ public class HotelMenu {
     // #region getMyReservations
 
     private void getMyReservations() {
-        System.out.println("Enter your Email format: name@domain.com");
-        final String customerEmail = this._scanner.nextLine();
-        final Collection<Reservation> reservations = _hotelResource.getCustomersReservations(customerEmail);
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Enter your Email format: name@domain.com");
+            final String customerEmail = scanner.nextLine();
+            final Collection<Reservation> reservations = _hotelResource.getCustomersReservations(customerEmail);
 
-        if (reservations == null || reservations.isEmpty()) {
-            System.out.println("No reservations found.");
-        } else {
-            for (Reservation reservation : reservations) {
-                System.out.println(reservation);
+            if (reservations == null || reservations.isEmpty()) {
+                System.out.println("No reservations found.");
+            } else {
+                for (Reservation reservation : reservations) {
+                    System.out.println(reservation);
+                }
             }
         }
     }
