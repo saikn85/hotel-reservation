@@ -83,56 +83,58 @@ public class HotelMenu {
     // #region findRooms
 
     private void findRooms() {
-        System.out.print("Enter Check-In Date mm/dd/yyyy example 02/01/2020");
-        Date checkIn = this.getInputDate(this._scanner);
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Enter Check-In Date mm/dd/yyyy example 02/01/2020");
+            Date checkIn = this.getInputDate(scanner);
 
-        System.out.print("Enter Check-Out Date mm/dd/yyyy example 02/21/2020");
-        Date checkOut = this.getInputDate(this._scanner);
+            System.out.print("Enter Check-Out Date mm/dd/yyyy example 02/21/2020");
+            Date checkOut = this.getInputDate(scanner);
 
-        if (checkIn != null && checkOut != null) {
-            Collection<IRoom> availableRooms = _hotelResource.findRoom(checkIn, checkOut);
+            if (checkIn != null && checkOut != null) {
+                Collection<IRoom> availableRooms = _hotelResource.findRoom(checkIn, checkOut);
 
-            if (availableRooms.isEmpty()) {
-                Collection<IRoom> alternativeRooms = _hotelResource.findAlternativeRooms(checkIn, checkOut);
-                if (alternativeRooms.isEmpty()) {
-                    this.searchAheadDays(checkIn, checkOut);
+                if (availableRooms.isEmpty()) {
+                    Collection<IRoom> alternativeRooms = _hotelResource.findAlternativeRooms(checkIn, checkOut);
+                    if (alternativeRooms.isEmpty()) {
+                        this.searchAheadDays(checkIn, checkOut);
+                    } else {
+                        final Date alternativeCheckIn = _hotelResource.getNextAlternateDate(checkIn);
+                        final Date alternativeCheckOut = _hotelResource.getNextAlternateDate(checkOut);
+                        System.out.println("We've only found rooms on alternative dates:" +
+                                "\nCheck-In Date:" + alternativeCheckIn +
+                                "\nCheck-Out Date:" + alternativeCheckOut);
+
+                        this.showRooms(alternativeRooms);
+                        this.makeReservation(scanner, alternativeCheckIn, alternativeCheckOut, alternativeRooms);
+                    }
                 } else {
-                    final Date alternativeCheckIn = _hotelResource.getNextAlternateDate(checkIn);
-                    final Date alternativeCheckOut = _hotelResource.getNextAlternateDate(checkOut);
-                    System.out.println("We've only found rooms on alternative dates:" +
-                            "\nCheck-In Date:" + alternativeCheckIn +
-                            "\nCheck-Out Date:" + alternativeCheckOut);
-
-                    this.showRooms(alternativeRooms);
-                    this.makeReservation(alternativeCheckIn, alternativeCheckOut, alternativeRooms);
+                    this.showRooms(availableRooms);
+                    this.makeReservation(scanner, checkIn, checkOut, availableRooms);
                 }
-            } else {
-                this.showRooms(availableRooms);
-                this.makeReservation(checkIn, checkOut, availableRooms);
             }
         }
     }
 
     // #region makeReservation
 
-    private void makeReservation(final Date checkInDate, final Date checkOutDate,
+    private void makeReservation(final Scanner scanner, final Date checkInDate, final Date checkOutDate,
             final Collection<IRoom> rooms) {
         System.out.println("Would you like to book? y/n");
-        final String bookRoom = this._scanner.nextLine();
+        final String bookRoom = scanner.nextLine();
 
         if ("y".equals(bookRoom.toLowerCase())) {
             System.out.println("Do you have an account with us? y/n");
-            final String haveAccount = this._scanner.nextLine();
+            final String haveAccount = scanner.nextLine();
 
             if ("y".equals(haveAccount.toLowerCase())) {
                 System.out.println("Enter Email format: name@domain.com");
-                final String customerEmail = this._scanner.nextLine();
+                final String customerEmail = scanner.nextLine();
 
                 if (_hotelResource.getCustomer(customerEmail) == null) {
                     System.out.println("Customer not found.\nYou may need to create a new account.");
                 } else {
                     System.out.println("What room number would you like to reserve?");
-                    final String roomNumber = this._scanner.nextLine();
+                    final String roomNumber = scanner.nextLine();
                     boolean foundUserSpecifiedRoom = false;
                     for (IRoom iRoom : rooms) {
                         if (iRoom.getRoomNumber() == roomNumber) {
@@ -205,21 +207,23 @@ public class HotelMenu {
     // #region createUserAccount
 
     private void createUserAccount() {
-        System.out.println("Enter Email format: name@domain.com");
-        final String email = this._scanner.nextLine();
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Enter Email format: name@domain.com");
+            final String email = scanner.nextLine();
 
-        System.out.println("First Name:");
-        final String firstName = this._scanner.nextLine();
+            System.out.println("First Name:");
+            final String firstName = scanner.nextLine();
 
-        System.out.println("Last Name:");
-        final String lastName = this._scanner.nextLine();
+            System.out.println("Last Name:");
+            final String lastName = scanner.nextLine();
 
-        try {
-            _hotelResource.newCustomer(email, firstName, lastName);
-            System.out.println("Account created successfully!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getLocalizedMessage());
-            this.createUserAccount();
+            try {
+                _hotelResource.newCustomer(email, firstName, lastName);
+                System.out.println("Account created successfully!");
+            } catch (IllegalArgumentException ex) {
+                System.out.println(ex.getLocalizedMessage());
+                this.createUserAccount();
+            }
         }
     }
 

@@ -2,10 +2,17 @@ package models.customer;
 
 public class Customer {
 
+    // #region Static Setup
+
     private static int _maxFirstNameLength = 10;
     private static int _maxLastNameLength = 9;
     private static int _maxEmailLength = 0;
     private static int _maxCustomerLenght = 0;
+    private static String _customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
+            + Customer.getMaxLastNameLength() + "s | %"
+            + Customer.getMaxEmailLength() + "s";
+
+    // #endregion
 
     private final String _firstName;
     private final String _lastName;
@@ -43,15 +50,17 @@ public class Customer {
         return Customer._maxCustomerLenght;
     }
 
+    public static String getCustomerFormat() {
+        return Customer._customerFormat;
+    }
+
     // #endregion
 
     // #region Override(s)
 
     @Override
     public String toString() {
-        String format = "%" + Customer.getMaxFirstNameLength() + "s | %" + Customer.getMaxLastNameLength() + "s | %"
-                + Customer.getMaxEmailLength() + "s";
-        return String.format(format, _firstName, _lastName, _email);
+        return String.format(Customer._customerFormat, _firstName, _lastName, _email);
     }
 
     // #endregion
