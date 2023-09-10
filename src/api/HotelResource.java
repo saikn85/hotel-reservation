@@ -27,7 +27,7 @@ public class HotelResource {
         return customerService.getCustomer(email);
     }
 
-    public void createACustomer(String email, String firstName, String lastName) {
+    public void newCustomer(String email, String firstName, String lastName) {
         customerService.addCustomer(email, firstName, lastName);
     }
 
@@ -35,8 +35,8 @@ public class HotelResource {
         return reservationService.getARoom(roomNumber);
     }
 
-    public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
-        return reservationService.reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
+    public Reservation bookRoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
+        return reservationService.reserveRoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
     }
 
     public Collection<Reservation> getCustomersReservations(String customerEmail) {
@@ -49,7 +49,7 @@ public class HotelResource {
         return reservationService.getAllCustomerReservations(getCustomer(customerEmail));
     }
 
-    public Collection<IRoom> findARoom(final Date checkIn, final Date checkOut) {
+    public Collection<IRoom> findRoom(final Date checkIn, final Date checkOut) {
         return reservationService.findRooms(checkIn, checkOut);
     }
 

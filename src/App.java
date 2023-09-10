@@ -39,7 +39,7 @@ public class App {
                     default:
                         scanner.close();
                         userOption = MainMenOptions.EXIT;
-                        System.out.println("exiting");
+                        System.out.println("Exited");
                         break;
                 }
             } catch (NumberFormatException ex) {

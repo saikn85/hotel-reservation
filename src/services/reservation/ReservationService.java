@@ -37,7 +37,7 @@ public class ReservationService {
         return rooms.values();
     }
 
-    public Reservation reserveARoom(final Customer customer, final IRoom room, final Date checkInDate,
+    public Reservation reserveRoom(final Customer customer, final IRoom room, final Date checkInDate,
             final Date checkOutDate) {
         final Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
 
