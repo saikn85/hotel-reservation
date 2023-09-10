@@ -102,9 +102,7 @@ public class AdministrativeMenu {
             System.out.println("No customers found.");
         } else {
             System.out.println();
-            String format = "%" + Customer.getMaxFirstNameLength() + "s | %" + Customer.getMaxLastNameLength()
-                    + "s | %s";
-            System.out.println(String.format(format, "First Name", "Last Name", "Email"));
+            System.out.println(String.format(Customer.getCustomerFormat(), "First Name", "Last Name", "Email"));
             PatternPrinter.printStars(Customer.getMaxCustomerLenght());
             for (Customer customer : customers) {
                 System.out.println(customer);
@@ -127,15 +125,14 @@ public class AdministrativeMenu {
             System.out.println("No Rooms found.");
         } else {
             System.out.println();
-            String format = "%" + Room.getmaxRoomNumLength() + "s | %6s | %s";
-            System.out.println(String.format(format, "Room Type => Room Number", "Cost/Night $", "Beds"));
-            PatternPrinter.printStars(Customer.getMaxCustomerLenght());
+            System.out.println(String.format(Room.getRoomFormat(), "Room Type => Room Number", "Cost/Night $", "Beds"));
+            PatternPrinter.printStars(Room.getMaxRoomLength());
             for (IRoom room : rooms) {
                 System.out.println(room);
             }
 
             System.out.println();
-            PatternPrinter.printStars(Room.getmaxRoomNumLength());
+            PatternPrinter.printStars(Room.getMaxRoomLength());
             System.out.println();
         }
     }
@@ -154,27 +151,27 @@ public class AdministrativeMenu {
 
     private void addNewRoom() {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Enter room number:");
-            final String roomNumber = scanner.nextLine();
+            System.out.print("Enter room number: ");
+            final String roomNumber = scanner.next();
 
-            System.out.println("Enter price per night:");
+            System.out.print("\n\nEnter price per night: ");
             final double roomPrice = this.parseRoomPrice(scanner);
 
-            System.out.println("Enter room type: 1 for single bed, 2 for double bed:");
+            System.out.print("\n\nEnter room type: 1 for single bed, 2 for double bed: ");
             final RoomType roomType = this.parseRoomType(scanner);
 
             final Room room = new Room(roomNumber, roomPrice, roomType);
             _adminResource.addRoom(room);
+            System.out.println();
+            System.out.println("Room added successfully!");
         }
-
-        System.out.println("Room added successfully!");
     }
 
     // #region parseRoomPrice
 
     private double parseRoomPrice(final Scanner scanner) {
         try {
-            return Double.parseDouble(scanner.nextLine());
+            return Double.parseDouble(scanner.next());
         } catch (NumberFormatException exp) {
             System.out.println("Enter a valid double number. " +
                     "Decimal digits must be separated by point (.)");
@@ -188,7 +185,7 @@ public class AdministrativeMenu {
 
     private RoomType parseRoomType(final Scanner scanner) {
         try {
-            return RoomType.valueOfLabel(scanner.nextLine());
+            return RoomType.valueOfLabel(scanner.next());
         } catch (IllegalArgumentException exp) {
             System.out.println("Invalid room type! Please, choose 1 for single bed or 2 for double bed:");
             return parseRoomType(scanner);
@@ -203,6 +200,13 @@ public class AdministrativeMenu {
 
     private void populateData() {
         _adminResource.populateApplicationData();
+        System.out.println();
+        PatternPrinter.printStars(Customer.getMaxCustomerLenght());
+        System.out.println();
+        System.out.println("Data has been populated");
+        System.out.println();
+        PatternPrinter.printStars(Customer.getMaxCustomerLenght());
+        System.out.println();
     }
 
     // #endregion
