@@ -12,11 +12,11 @@ import models.room.enums.RoomType;
 
 public class AdministrativeMenu {
     private static final AdminResource _adminResource = AdminResource.getAdminResource();
-    private final Scanner _scanner;
+    Scanner _scanner = new Scanner(System.in);
 
-    public AdministrativeMenu(final Scanner scanner) {
+    public AdministrativeMenu() {
         super();
-        this._scanner = scanner;
+
     }
 
     public MainMenuOptions adminMenuOptions() {
@@ -85,7 +85,7 @@ public class AdministrativeMenu {
                 System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
                 userOption = 7; // Break away from Unknown Exception
             }
-        } while (userOption != 6 || userOption != 7);
+        } while (userOption != 6 && userOption != 7);
 
         if (userOption == 6)
             return MainMenuOptions.TRYAGAIN;
@@ -154,10 +154,10 @@ public class AdministrativeMenu {
             System.out.print("Enter room number: ");
             final String roomNumber = scanner.next();
 
-            System.out.print("\n\nEnter price per night: ");
+            System.out.print("\nEnter price per night: ");
             final double roomPrice = this.parseRoomPrice(scanner);
 
-            System.out.print("\n\nEnter room type: 1 for single bed, 2 for double bed: ");
+            System.out.print("\nEnter room type: 1 for single bed, 2 for double bed: ");
             final RoomType roomType = this.parseRoomType(scanner);
 
             final Room room = new Room(roomNumber, roomPrice, roomType);

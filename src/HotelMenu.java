@@ -15,11 +15,10 @@ import models.room.Room;
 public class HotelMenu {
 
     private static final HotelResource _hotelResource = HotelResource.getHotelResource();
-    private final Scanner _scanner;
+    Scanner _scanner = new Scanner(System.in);
 
-    public HotelMenu(final Scanner scanner) {
+    public HotelMenu() {
         super();
-        this._scanner = scanner;
     }
 
     public MainMenuOptions hotelMenuOptions() {
@@ -37,8 +36,9 @@ public class HotelMenu {
                 System.out.println("3.\tCreate an Account");
                 System.out.println("4.\tBack to Main Menu");
                 System.out.println("5.\tExit Application");
+                System.out.println();
                 System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
-                switch (Integer.parseInt(this._scanner.next())) {
+                switch (Integer.parseInt(_scanner.next())) {
                     case 1:
                         userOption = 1;
                         this.findRooms();
@@ -78,7 +78,7 @@ public class HotelMenu {
                 System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
                 userOption = 5; // Break away from Unknown Exception
             }
-        } while (userOption != 4 || userOption != 5);
+        } while (userOption != 4 && userOption != 5);
 
         if (userOption == 4)
             return MainMenuOptions.TRYAGAIN;
@@ -94,13 +94,15 @@ public class HotelMenu {
             System.out.print("Enter Check-In Date mm/dd/yyyy example 02/01/2020: ");
             Date checkIn = this.getInputDate(scanner);
 
-            System.out.print("\n\nEnter Check-Out Date mm/dd/yyyy example 02/21/2020: ");
+            System.out.print("\nEnter Check-Out Date mm/dd/yyyy example 02/21/2020: ");
             Date checkOut = this.getInputDate(scanner);
 
             if (checkIn != null && checkOut != null) {
                 Collection<IRoom> availableRooms = _hotelResource.findRoom(checkIn, checkOut);
 
                 if (availableRooms.isEmpty()) {
+                    System.out.println();
+                    System.out.println("Searching for Alternative rooms...");
                     Collection<IRoom> alternativeRooms = _hotelResource.findAlternativeRooms(checkIn, checkOut);
                     if (alternativeRooms.isEmpty()) {
                         this.searchAheadDays(scanner, checkIn, checkOut);
@@ -127,11 +129,13 @@ public class HotelMenu {
 
     private void searchAheadDays(final Scanner scanner, final Date checkIn, final Date checkOut) {
         System.out.println();
+        System.out.println("Alternate rooms were not found...");
+        System.out.println();
         System.out.print("Would you like to extend the serach? y/n: ");
         final String search = scanner.next();
 
         if ("y".equals(search.toLowerCase())) {
-            System.out.print("\n\nEnter the number of look ahead days: ");
+            System.out.print("\nEnter the number of look ahead days: ");
             final String searchDays = scanner.next();
             try {
                 int days = Integer.parseInt(searchDays);
@@ -174,18 +178,18 @@ public class HotelMenu {
         final String bookRoom = scanner.next();
 
         if ("y".equals(bookRoom.toLowerCase())) {
-            System.out.print("\n\nDo you have an account with us? y/n: ");
+            System.out.print("\nDo you have an account with us? y/n: ");
             final String haveAccount = scanner.next();
 
             if ("y".equals(haveAccount.toLowerCase())) {
-                System.out.print("\n\nEnter Email format: name@domain.com: ");
+                System.out.print("\nEnter Email format: name@domain.com: ");
                 final String customerEmail = scanner.next();
 
                 if (_hotelResource.getCustomer(customerEmail) == null) {
                     System.out.println();
                     System.out.println("Customer not found. You may need to create a new account.");
                 } else {
-                    System.out.print("\n\nEnter Room Number that you wish to book: ");
+                    System.out.print("\nEnter Room Number that you wish to book: ");
                     final String roomNumber = scanner.next();
                     boolean foundUserSpecifiedRoom = false;
                     for (IRoom iRoom : rooms) {

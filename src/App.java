@@ -21,8 +21,8 @@ public class App {
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
 
-        HotelMenu customerMenu = new HotelMenu(scanner);
-        AdministrativeMenu adminMenu = new AdministrativeMenu(scanner);
+        HotelMenu customerMenu = new HotelMenu();
+        AdministrativeMenu adminMenu = new AdministrativeMenu();
 
         do {
             try {
