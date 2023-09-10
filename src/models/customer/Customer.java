@@ -2,8 +2,8 @@ package models.customer;
 
 public class Customer {
 
-    private static int _maxFirstNameLength = 0;
-    private static int _maxLastNameLength = 0;
+    private static int _maxFirstNameLength = 10;
+    private static int _maxLastNameLength = 9;
     private static int _maxEmailLength = 0;
     private static int _maxCustomerLenght = 0;
 
@@ -13,7 +13,7 @@ public class Customer {
 
     public Customer(final String firstName, final String lastName, final String email) {
         super();
-        
+
         this._firstName = firstName;
         this._lastName = lastName;
         this._email = email;

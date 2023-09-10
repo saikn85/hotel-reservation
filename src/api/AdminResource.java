@@ -45,7 +45,7 @@ public class AdminResource {
         _customerService.addCustomer("madmax@domain.com", "Mad", "Max");
         _customerService.addCustomer("tonystark@domain.com", "Tony", "Stark");
         _customerService.addCustomer("narutoUzumaki@domain.com", "Naruto", "Uzumaki");
-        _customerService.addCustomer("orochimaru@hell.com", "Orochimaru", null);
+        _customerService.addCustomer("orochimaru@hell.com", "Orochimaru", "");
         _customerService.addCustomer("tsunadeSenju@domain.com", "Tsuande", "Senju");
 
         _reservationService.addRoom(new Room("101", 150.0d, RoomType.DOUBLE));

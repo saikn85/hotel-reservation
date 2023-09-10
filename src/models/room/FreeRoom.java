@@ -10,6 +10,8 @@ public class FreeRoom extends Room {
 
     @Override
     public String toString() {
-        return "Free Room => " + super.toString();
+        String format = "Free Room => %" + Room.getmaxRoomNumLength() + "s | %12.2f | %s";
+        return String.format(format, super.getRoomNumber(), super.getRoomPrice(),
+                super.getRoomType());
     }
 }

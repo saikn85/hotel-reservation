@@ -5,7 +5,7 @@ import models.room.enums.RoomType;
 
 public class Room implements IRoom {
 
-    private static int _maxRoomNumLength = 0;
+    private static int _maxRoomNumLength = 11;
     private static int _maxRoomLength = 0;
 
     private final String _roomNumber;
@@ -54,8 +54,8 @@ public class Room implements IRoom {
 
     @Override
     public String toString() {
-        String format = "%" + _maxRoomNumLength + "s | %6.2f | %s";
-        return String.format("Paid Room => " + format, this._roomNumber, this._price, this._roomType);
+        String format = "Paid Room => %" + Room.getmaxRoomNumLength() + "s | %12.2f | %s";
+        return String.format(format, this._roomNumber, this._price, this._roomType);
     }
 
     @Override

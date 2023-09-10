@@ -19,8 +19,10 @@ public class CustomerService {
     }
 
     public void addCustomer(final String email, final String firstName, final String lastName) {
-        if (EmailValidator.isValidEmail(email))
+        if (EmailValidator.isValidEmail(email)) {
             _customers.put(email, new Customer(firstName, lastName, email));
+            return;
+        }
 
         throw new IllegalArgumentException("Invalid Email Address Pattern");
     }

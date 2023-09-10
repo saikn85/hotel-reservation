@@ -23,6 +23,11 @@ public class AdministrativeMenu {
         int userOption = 0;
         do {
             try {
+                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+                System.out.println();
+                System.out.println("Administravtive Menu");
+                System.out.println();
+                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
                 System.out.println();
                 System.out.println("1.\tSee all Customers");
                 System.out.println("2.\tSee all Rooms");
@@ -34,22 +39,30 @@ public class AdministrativeMenu {
                 System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
                 switch (Integer.parseInt(_scanner.next())) {
                     case 1:
+                        userOption = 1;
                         this.listAllCustomers();
                         break;
                     case 2:
+                        userOption = 2;
                         this.listAllRooms();
                         break;
                     case 3:
+                        userOption = 3;
                         this.listAllReservations();
                         break;
                     case 4:
+                        userOption = 4;
                         this.addNewRoom();
                         break;
                     case 5:
+                        userOption = 5;
                         this.populateData();
                         break;
                     case 6:
+                        userOption = 6;
+                        break;
                     case 7:
+                        userOption = 7;
                         break;
                     default:
                         System.out.println();
@@ -72,7 +85,7 @@ public class AdministrativeMenu {
                 System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
                 userOption = 7; // Break away from Unknown Exception
             }
-        } while (userOption != 4 || userOption != 5);
+        } while (userOption != 6 || userOption != 7);
 
         if (userOption == 6)
             return MainMenuOptions.TRYAGAIN;
@@ -88,9 +101,18 @@ public class AdministrativeMenu {
         if (customers.isEmpty()) {
             System.out.println("No customers found.");
         } else {
+            System.out.println();
+            String format = "%" + Customer.getMaxFirstNameLength() + "s | %" + Customer.getMaxLastNameLength()
+                    + "s | %s";
+            System.out.println(String.format(format, "First Name", "Last Name", "Email"));
+            PatternPrinter.printStars(Customer.getMaxCustomerLenght());
             for (Customer customer : customers) {
                 System.out.println(customer);
             }
+
+            System.out.println();
+            PatternPrinter.printStars(Customer.getMaxCustomerLenght());
+            System.out.println();
         }
     }
 
@@ -104,9 +126,17 @@ public class AdministrativeMenu {
         if (rooms.isEmpty()) {
             System.out.println("No Rooms found.");
         } else {
+            System.out.println();
+            String format = "%" + Room.getmaxRoomNumLength() + "s | %6s | %s";
+            System.out.println(String.format(format, "Room Type => Room Number", "Cost/Night $", "Beds"));
+            PatternPrinter.printStars(Customer.getMaxCustomerLenght());
             for (IRoom room : rooms) {
                 System.out.println(room);
             }
+
+            System.out.println();
+            PatternPrinter.printStars(Room.getmaxRoomNumLength());
+            System.out.println();
         }
     }
 
