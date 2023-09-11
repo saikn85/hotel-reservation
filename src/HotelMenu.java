@@ -263,7 +263,7 @@ public class HotelMenu {
             }
 
             System.out.println();
-            PatternPrinter.printStars(Room.getMaxRoomLength());
+            PatternPrinter.printStars(Reservation.getMaxReservationLenght());
             System.out.println();
         }
     }
