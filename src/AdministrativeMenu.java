@@ -127,7 +127,7 @@ public class AdministrativeMenu {
             System.out.println("No Rooms found.");
         } else {
             System.out.println();
-            System.out.println(String.format(Room.getRoomFormat(), "Room Type => Room Number", "Cost/Night $", "Beds"));
+            System.out.println(String.format(Room.getRoomFormat(), "Room Type", "Room Number", "Cost/Night $", "Beds"));
             PatternPrinter.printStars(Room.getMaxRoomLength());
             for (IRoom room : rooms) {
                 System.out.println(room);

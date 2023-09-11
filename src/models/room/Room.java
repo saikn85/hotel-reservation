@@ -9,7 +9,7 @@ public class Room implements IRoom {
 
     private static int _maxRoomNumLength = 11;
     private static int _maxRoomLength = 0;
-    private static String _roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %12.2f | %s";
+    private static String _roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %14s | %s";
 
     // #endregion
 
@@ -63,9 +63,8 @@ public class Room implements IRoom {
 
     @Override
     public String toString() {
-        String repr = String.format(Room._roomFormat, "Paid Room", this._roomNumber, this._price, this._roomType);
-        Room._maxRoomLength = repr.length();
-        return repr;
+        return String.format(Room._roomFormat, "Paid Room", this._roomNumber,
+                String.format("%12.2f", this._price), this._roomType);
     }
 
     @Override
@@ -94,6 +93,10 @@ public class Room implements IRoom {
     private void computeLength() {
         if (this._roomNumber.length() > Room._maxRoomNumLength)
             Room._maxRoomNumLength = this._roomNumber.length();
+
+        int sum = 9 + Room._maxRoomNumLength + 14;
+        if (sum > Room._maxRoomLength)
+            Room._maxRoomLength = sum + 6;
     }
 
     // #endregion
