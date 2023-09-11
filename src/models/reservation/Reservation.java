@@ -53,6 +53,8 @@ public class Reservation {
     }
 
     public static String getReservationFormat() {
+        _reservationFormat = "%" + Customer.getMaxCustomerLenght() + "s | %"
+                + Room.getMaxRoomLength() + "s | %13s | %14s";
         return Reservation._reservationFormat;
     }
 

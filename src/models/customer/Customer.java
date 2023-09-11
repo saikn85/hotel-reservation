@@ -51,6 +51,9 @@ public class Customer {
     }
 
     public static String getCustomerFormat() {
+        _customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
+                + Customer.getMaxLastNameLength() + "s | %"
+                + Customer.getMaxEmailLength() + "s";
         return Customer._customerFormat;
     }
 

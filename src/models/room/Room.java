@@ -54,6 +54,7 @@ public class Room implements IRoom {
     }
 
     public static String getRoomFormat() {
+        _roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %14s | %s";
         return Room._roomFormat;
     }
 
@@ -94,7 +95,7 @@ public class Room implements IRoom {
         if (this._roomNumber.length() > Room._maxRoomNumLength)
             Room._maxRoomNumLength = this._roomNumber.length();
 
-        int sum = 9 + Room._maxRoomNumLength + 14;
+        int sum = 13 + Room._maxRoomNumLength + 20;
         if (sum > Room._maxRoomLength)
             Room._maxRoomLength = sum + 6;
     }

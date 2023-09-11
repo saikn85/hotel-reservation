@@ -21,64 +21,63 @@ public class HotelMenu {
 
     public MainMenuOptions hotelMenuOptions() {
         int userOption = 0;
-        try (Scanner scanner = new Scanner(System.in)) {
-            do {
-                try {
-                    PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
-                    System.out.println();
-                    System.out.println("Hotel Services Menu");
-                    System.out.println();
-                    PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
-                    System.out.println();
-                    System.out.println("1.\tFind and reserve a room");
-                    System.out.println("2.\tSee my reservations");
-                    System.out.println("3.\tCreate an Account");
-                    System.out.println("4.\tBack to Main Menu");
-                    System.out.println("5.\tExit Application");
-                    System.out.println();
-                    System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
-                    switch (Integer.parseInt(scanner.next())) {
-                        case 1:
-                            userOption = 1;
-                            this.findRooms(scanner);
-                            break;
-                        case 2:
-                            userOption = 2;
-                            this.getMyReservations(scanner);
-                            break;
-                        case 3:
-                            userOption = 3;
-                            this.createUserAccount(scanner);
-                            break;
-                        case 4:
-                            userOption = 4;
-                            break;
-                        case 5:
-                            userOption = 5;
-                            break;
-                        default:
-                            System.out.println();
-                            PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                            System.out.println();
-                            System.out.println("Invalid option specified, try again.");
-                            System.out.println();
-                            PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                            break;
-                    }
-                } catch (NumberFormatException ex) {
-                    userOption = 0;
-                    System.out.println();
-                    PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                    System.out.println();
-                    System.out.println("Invalid option specified, try again.");
-                    System.out.println();
-                    PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                } catch (Exception e) {
-                    System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
-                    userOption = 5; // Break away from Unknown Exception
+        final Scanner scanner = new Scanner(System.in);
+        do {
+            try {
+                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+                System.out.println();
+                System.out.println("Hotel Services Menu");
+                System.out.println();
+                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+                System.out.println();
+                System.out.println("1.\tFind and reserve a room");
+                System.out.println("2.\tSee my reservations");
+                System.out.println("3.\tCreate an Account");
+                System.out.println("4.\tBack to Main Menu");
+                System.out.println("5.\tExit Application");
+                System.out.println();
+                System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
+                switch (Integer.parseInt(scanner.next())) {
+                    case 1:
+                        userOption = 1;
+                        this.findRooms(scanner);
+                        break;
+                    case 2:
+                        userOption = 2;
+                        this.getMyReservations(scanner);
+                        break;
+                    case 3:
+                        userOption = 3;
+                        this.createUserAccount(scanner);
+                        break;
+                    case 4:
+                        userOption = 4;
+                        break;
+                    case 5:
+                        userOption = 5;
+                        break;
+                    default:
+                        System.out.println();
+                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                        System.out.println();
+                        System.out.println("Invalid option specified, try again.");
+                        System.out.println();
+                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                        break;
                 }
-            } while (userOption != 4 && userOption != 5);
-        }
+            } catch (NumberFormatException ex) {
+                userOption = 0;
+                System.out.println();
+                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                System.out.println();
+                System.out.println("Invalid option specified, try again.");
+                System.out.println();
+                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+            } catch (Exception e) {
+                System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
+                userOption = 5; // Break away from Unknown Exception
+            }
+        } while (userOption != 4 && userOption != 5);
 
         if (userOption == 4)
             return MainMenuOptions.TRYAGAIN;
