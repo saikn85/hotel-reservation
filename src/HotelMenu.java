@@ -187,24 +187,21 @@ public class HotelMenu {
                     System.out.println("Customer not found. You may need to create a new account.");
                 } else {
                     System.out.print("\nEnter Room Number that you wish to book: ");
-                    final String roomNumber = scanner.next();
+                    final String userInRoomNumber = scanner.next();
                     boolean foundUserSpecifiedRoom = false;
                     for (IRoom iRoom : rooms) {
-                        if (iRoom.getRoomNumber() == roomNumber) {
+                        if (iRoom.getRoomNumber().equals(userInRoomNumber)) {
                             foundUserSpecifiedRoom = true;
                             break;
                         }
                     }
 
                     if (foundUserSpecifiedRoom) {
-                        final IRoom room = _hotelResource.getRoom(roomNumber);
-                        final Reservation reservation = _hotelResource
-                                .bookRoom(customerEmail, room, checkInDate, checkOutDate);
+                        final IRoom room = _hotelResource.getRoom(userInRoomNumber);
+                        _hotelResource.bookRoom(customerEmail, room, checkInDate, checkOutDate);
 
                         System.out.println();
                         System.out.println("Reservation created successfully!");
-                        System.out.println();
-                        System.out.println(reservation);
                     } else {
                         System.out.println("Error: room number not available. Start reservation again.");
                     }
@@ -212,6 +209,10 @@ public class HotelMenu {
             } else {
                 System.out.println("Please, create an account.");
             }
+        } else if ("n".equals(bookRoom.toLowerCase())) {
+            return;
+        } else {
+            this.makeReservation(scanner, checkInDate, checkOutDate, rooms);
         }
     }
 
@@ -225,7 +226,7 @@ public class HotelMenu {
             System.out.println("No rooms found.");
         } else {
             System.out.println();
-            System.out.println(String.format(Room.getRoomFormat(), "Room Type => Room Number", "Cost/Night $", "Beds"));
+            System.out.println(String.format(Room.getRoomFormat(), "Room Type", "Room Number", "Cost/Night $", "Beds"));
             PatternPrinter.printStars(Room.getMaxRoomLength());
             for (IRoom room : rooms) {
                 System.out.println(room);
