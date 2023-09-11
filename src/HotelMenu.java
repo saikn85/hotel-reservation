@@ -253,9 +253,18 @@ public class HotelMenu {
         if (reservations == null || reservations.isEmpty()) {
             System.out.println("No reservations found.");
         } else {
+            System.out.println();
+            System.out.println(String.format(Reservation.getReservationFormat(), "Customer Details", "Room Details",
+                    "Check-In Date", "Check-Out Date"));
+            PatternPrinter.printStars(Reservation.getMaxReservationLenght());
+
             for (Reservation reservation : reservations) {
                 System.out.println(reservation);
             }
+
+            System.out.println();
+            PatternPrinter.printStars(Room.getMaxRoomLength());
+            System.out.println();
         }
     }
 
@@ -268,11 +277,11 @@ public class HotelMenu {
         System.out.print("Enter Email format: name@domain.com: ");
         final String email = scanner.next();
 
-        System.out.println("First Name:");
-        final String firstName = scanner.nextLine();
+        System.out.print("\nFirst Name: ");
+        final String firstName = scanner.next();
 
-        System.out.println("Last Name:");
-        final String lastName = scanner.nextLine();
+        System.out.print("\nLast Name: ");
+        final String lastName = scanner.next();
 
         try {
             _hotelResource.newCustomer(email, firstName, lastName);

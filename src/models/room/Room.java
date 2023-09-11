@@ -54,7 +54,7 @@ public class Room implements IRoom {
     }
 
     public static String getRoomFormat() {
-        _roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %14s | %s";
+        Room._roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %14s | %s";
         return Room._roomFormat;
     }
 
@@ -64,6 +64,7 @@ public class Room implements IRoom {
 
     @Override
     public String toString() {
+        Room._roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %14s | %s";
         return String.format(Room._roomFormat, "Paid Room", this._roomNumber,
                 String.format("%12.2f", this._price), this._roomType);
     }

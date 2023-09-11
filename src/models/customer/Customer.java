@@ -51,7 +51,7 @@ public class Customer {
     }
 
     public static String getCustomerFormat() {
-        _customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
+        Customer._customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
                 + Customer.getMaxLastNameLength() + "s | %"
                 + Customer.getMaxEmailLength() + "s";
         return Customer._customerFormat;
@@ -63,6 +63,9 @@ public class Customer {
 
     @Override
     public String toString() {
+        Customer._customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
+                + Customer.getMaxLastNameLength() + "s | %"
+                + Customer.getMaxEmailLength() + "s";
         return String.format(Customer._customerFormat, this._firstName, this._lastName, this._email);
     }
 

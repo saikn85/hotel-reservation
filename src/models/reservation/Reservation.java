@@ -64,7 +64,9 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return String.format(Reservation._reservationFormat, this._customer, this._room,
+        String customer = this._customer.toString();
+        String room = this._room.toString();
+        return String.format(Reservation._reservationFormat, customer, room,
                 Reservation.getFormattedDate(this._checkInDate),
                 Reservation.getFormattedDate(this._checkOutDate));
     }
@@ -74,9 +76,9 @@ public class Reservation {
     // #region Pirvate Helpers
 
     private void computeLength() {
-        int sum = Customer.getMaxCustomerLenght() + Room.getMaxRoomLength() + 13 + 14;
+        int sum = Customer.getMaxCustomerLenght() + Room.getMaxRoomLength() + 27;
         if (sum > Reservation._maxReservationLenght)
-            Reservation._maxReservationLenght = sum + 6;
+            Reservation._maxReservationLenght = sum + 9;
     }
 
     private static String getFormattedDate(final Date date) {
