@@ -63,7 +63,9 @@ public class Room implements IRoom {
 
     @Override
     public String toString() {
-        return String.format(Room._roomFormat, "Paid Room", this._roomNumber, this._price, this._roomType);
+        String repr = String.format(Room._roomFormat, "Paid Room", this._roomNumber, this._price, this._roomType);
+        Room._maxRoomLength = repr.length();
+        return repr;
     }
 
     @Override
@@ -92,8 +94,6 @@ public class Room implements IRoom {
     private void computeLength() {
         if (this._roomNumber.length() > Room._maxRoomNumLength)
             Room._maxRoomNumLength = this._roomNumber.length();
-
-        Room._maxRoomLength = this.toString().length();
     }
 
     // #endregion

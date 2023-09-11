@@ -99,7 +99,6 @@ public class HotelMenu {
 
         if (checkIn != null && checkOut != null) {
             Collection<IRoom> availableRooms = _hotelResource.findRoom(checkIn, checkOut);
-
             if (availableRooms.isEmpty()) {
                 System.out.println();
                 System.out.println("Searching for Alternative rooms... ");

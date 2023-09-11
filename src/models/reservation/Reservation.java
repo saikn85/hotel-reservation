@@ -30,8 +30,6 @@ public class Reservation {
         this._room = room;
         this._checkInDate = checkInDate;
         this._checkOutDate = checkOutDate;
-
-        this.computeLength();
     }
 
     // #region Getters
@@ -62,18 +60,16 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return String.format(Reservation._reservationFormat, this._customer, this._room,
+        String repr = String.format(Reservation._reservationFormat, this._customer, this._room,
                 Reservation.getFormattedDate(this._checkInDate),
                 Reservation.getFormattedDate(this._checkOutDate));
+        Reservation._maxReservationLenght = repr.length();
+        return repr;
     }
 
     // #endregion
 
     // #region Pirvate Helpers
-
-    private void computeLength() {
-        Reservation._maxReservationLenght = this.toString().length();
-    }
 
     private static String getFormattedDate(final Date date) {
         return new SimpleDateFormat("yyyy-mm-dd").format(date);

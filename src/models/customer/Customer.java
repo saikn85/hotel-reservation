@@ -60,7 +60,9 @@ public class Customer {
 
     @Override
     public String toString() {
-        return String.format(Customer._customerFormat, _firstName, _lastName, _email);
+        String repr = String.format(Customer._customerFormat, this._firstName, this._lastName, this._email);
+        Customer._maxCustomerLenght = repr.length();
+        return repr;
     }
 
     // #endregion
@@ -78,7 +80,6 @@ public class Customer {
         if (this._email.length() > Customer._maxEmailLength)
             Customer._maxEmailLength = this._email.length();
 
-        Customer._maxCustomerLenght = this.toString().length();
     }
 
     // #endregion

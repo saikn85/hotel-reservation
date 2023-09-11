@@ -103,7 +103,7 @@ public class ReservationService {
         final Collection<Reservation> allReservations = getAllReservations();
         final Collection<IRoom> roomsNotAvailable = new ArrayList<>();
         final Collection<IRoom> roomsAvailable = new ArrayList<>();
-
+        
         for (Reservation reservation : allReservations) {
             if (checkForReservationOverlaps(reservation, checkInDate, checkOutDate)) {
                 roomsNotAvailable.add(reservation.getRoom());
