@@ -23,11 +23,11 @@ public class HotelMenu {
         final Scanner scanner = new Scanner(System.in);
         do {
             try {
-                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+                PatternPrinter.printPattern(MenuOptionsHelpers.getMainMenuOptLength());
                 System.out.println();
                 System.out.println("Hotel Services Menu");
                 System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+                PatternPrinter.printPattern(MenuOptionsHelpers.getMainMenuOptLength());
                 System.out.println();
                 System.out.println("1.\tFind and reserve a room");
                 System.out.println("2.\tSee my reservations");
@@ -57,21 +57,21 @@ public class HotelMenu {
                         break;
                     default:
                         System.out.println();
-                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                        PatternPrinter.printPattern(MenuOptionsHelpers.getSelectionOptLength());
                         System.out.println();
                         System.out.println("Invalid option specified, try again.");
                         System.out.println();
-                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                        PatternPrinter.printPattern(MenuOptionsHelpers.getSelectionOptLength());
                         break;
                 }
             } catch (NumberFormatException ex) {
                 userOption = 0;
                 System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                PatternPrinter.printPattern(MenuOptionsHelpers.getSelectionOptLength());
                 System.out.println();
                 System.out.println("Invalid option specified, try again.");
                 System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                PatternPrinter.printPattern(MenuOptionsHelpers.getSelectionOptLength());
             } catch (Exception e) {
                 System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
                 userOption = 5; // Break away from Unknown Exception
@@ -226,13 +226,13 @@ public class HotelMenu {
         } else {
             System.out.println();
             System.out.println(String.format(Room.getRoomFormat(), "Room Type", "Room Number", "Cost/Night $", "Beds"));
-            PatternPrinter.printStars(Room.getMaxRoomLength());
+            PatternPrinter.printPattern(Room.getMaxRoomLength());
             for (IRoom room : rooms) {
                 System.out.println(room);
             }
 
             System.out.println();
-            PatternPrinter.printStars(Room.getMaxRoomLength());
+            PatternPrinter.printPattern(Room.getMaxRoomLength());
             System.out.println();
         }
     }
@@ -255,14 +255,14 @@ public class HotelMenu {
             System.out.println();
             System.out.println(String.format(Reservation.getReservationFormat(), "Customer Details", "Room Details",
                     "Check-In Date", "Check-Out Date"));
-            PatternPrinter.printStars(Reservation.getMaxReservationLength());
+            PatternPrinter.printPattern(Reservation.getMaxReservationLength());
 
             for (Reservation reservation : reservations) {
                 System.out.println(reservation);
             }
 
             System.out.println();
-            PatternPrinter.printStars(Reservation.getMaxReservationLength());
+            PatternPrinter.printPattern(Reservation.getMaxReservationLength());
             System.out.println();
         }
     }

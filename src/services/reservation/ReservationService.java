@@ -39,38 +39,8 @@ public class ReservationService {
         return reservation;
     }
 
-    public Collection<IRoom> findRooms(final Date checkInDate, final Date checkOutDate) {
-        return findAllAvailableRooms(checkInDate, checkOutDate);
-    }
-
-    public Collection<IRoom> findAlternateRooms(final Date checkInDate, final Date checkOutDate) {
-        return findAllAvailableRooms(getNextAlternateDate(checkInDate), getNextAlternateDate(checkOutDate));
-    }
-
-    public Collection<IRoom> findAlternateRooms(final Date checkInDate, final Date checkOutDate,
-                                                final int extendedSearchDays) {
-        return findAllAvailableRooms(getNextAlternateDate(checkInDate, extendedSearchDays),
-                getNextAlternateDate(checkOutDate, extendedSearchDays));
-    }
-
     public Collection<Reservation> getAllCustomerReservations(final Customer customer) {
         return reservations.get(customer.getEmail());
-    }
-
-    public Date getNextAlternateDate(final Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, SEARCH_AHEAD_DAYS);
-
-        return calendar.getTime();
-    }
-
-    public Date getNextAlternateDate(final Date date, final int extendedSearchDays) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, extendedSearchDays);
-
-        return calendar.getTime();
     }
 
     public Collection<Reservation> getAllReservations() {
@@ -82,33 +52,67 @@ public class ReservationService {
 
         return allReservations;
     }
+//
+//    public Collection<IRoom> findRooms(final Date checkInDate, final Date checkOutDate) {
+//        return findAllAvailableRooms(checkInDate, checkOutDate);
+//    }
+//
+//    public Collection<IRoom> findAlternateRooms(final Date checkInDate, final Date checkOutDate) {
+//        return findAllAvailableRooms(getNextAlternateDate(checkInDate), getNextAlternateDate(checkOutDate));
+//    }
+//
+//    public Collection<IRoom> findAlternateRooms(final Date checkInDate, final Date checkOutDate,
+//                                                final int extendedSearchDays) {
+//        return findAllAvailableRooms(getNextAlternateDate(checkInDate, extendedSearchDays),
+//                getNextAlternateDate(checkOutDate, extendedSearchDays));
+//    }
+//
+//
+//
+//    public Date getNextAlternateDate(final Date date) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(date);
+//        calendar.add(Calendar.DATE, SEARCH_AHEAD_DAYS);
+//
+//        return calendar.getTime();
+//    }
+//
+//    public Date getNextAlternateDate(final Date date, final int extendedSearchDays) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(date);
+//        calendar.add(Calendar.DATE, extendedSearchDays);
+//
+//        return calendar.getTime();
+//    }
+//
 
-    // #region Private Helpers
-
-    private Collection<IRoom> findAllAvailableRooms(final Date checkInDate, final Date checkOutDate) {
-        final Collection<Reservation> allReservations = getAllReservations();
-        final Collection<IRoom> roomsNotAvailable = new ArrayList<>();
-        final Collection<IRoom> roomsAvailable = new ArrayList<>();
-
-        for (Reservation reservation : allReservations) {
-            if (checkForReservationOverlaps(reservation, checkInDate, checkOutDate)) {
-                roomsNotAvailable.add(reservation.getRoom());
-            }
-        }
-
-        for (IRoom iRoom : rooms.values()) {
-            if (roomsNotAvailable.contains(iRoom)) {
-                continue;
-            }
-            roomsAvailable.add(iRoom);
-        }
-
-        return roomsAvailable;
-    }
-
-    private boolean checkForReservationOverlaps(final Reservation reservation, final Date checkInDate,
-                                                final Date checkOutDate) {
-        return checkInDate.before(reservation.getCheckOutDate())
-                && checkOutDate.after(reservation.getCheckInDate());
-    }
+//
+//    // #region Private Helpers
+//
+//    private Collection<IRoom> findAllAvailableRooms(final Date checkInDate, final Date checkOutDate) {
+//        final Collection<Reservation> allReservations = getAllReservations();
+//        final Collection<IRoom> roomsNotAvailable = new ArrayList<>();
+//        final Collection<IRoom> roomsAvailable = new ArrayList<>();
+//
+//        for (Reservation reservation : allReservations) {
+//            if (checkForReservationOverlaps(reservation, checkInDate, checkOutDate)) {
+//                roomsNotAvailable.add(reservation.getRoom());
+//            }
+//        }
+//
+//        for (IRoom iRoom : rooms.values()) {
+//            if (roomsNotAvailable.contains(iRoom)) {
+//                continue;
+//            }
+//            roomsAvailable.add(iRoom);
+//        }
+//
+//        return roomsAvailable;
+//    }
+//
+//    private boolean checkForReservationOverlaps(final Reservation reservation, final Date checkInDate,
+//                                                final Date checkOutDate) {
+//        return checkInDate.before(reservation.getCheckOutDate())
+//                && checkOutDate.after(reservation.getCheckInDate());
+//    }
 }

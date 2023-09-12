@@ -1,6 +1,7 @@
 package api;
 
 import java.util.Collection;
+
 import models.customer.Customer;
 import models.reservation.Reservation;
 import models.room.FreeRoom;
@@ -9,10 +10,12 @@ import models.room.Room;
 import models.room.enums.RoomType;
 import services.customer.CustomerService;
 import services.reservation.ReservationService;
+import services.room.RoomService;
 
 public class AdminResource {
     private static final AdminResource SINGLETON = new AdminResource();
     private final CustomerService _customerService = CustomerService.getCustomerService();
+    private final RoomService _roomService = RoomService.getRoomService();
     private final ReservationService _reservationService = ReservationService.getReservationService();
 
     private AdminResource() {
@@ -27,11 +30,11 @@ public class AdminResource {
     }
 
     public void addRoom(IRoom room) {
-        _reservationService.addRoom(room);
+        _roomService.addRoom(room);
     }
 
     public Collection<IRoom> getAllRooms() {
-        return _reservationService.getAllRooms();
+        return _roomService.getAllRooms();
     }
 
     public Collection<Customer> getAllCustomers() {
@@ -49,14 +52,14 @@ public class AdminResource {
         _customerService.addCustomer("orochimaru@hell.com", "Orochimaru", "");
         _customerService.addCustomer("tsunadeSenju@domain.com", "Tsuande", "Senju");
 
-        _reservationService.addRoom(new Room("101", 150.0d, RoomType.DOUBLE));
-        _reservationService.addRoom(new Room("102", 75.0d, RoomType.SINGLE));
-        _reservationService.addRoom(new Room("103", 200.0d, RoomType.DOUBLE));
-        _reservationService.addRoom(new FreeRoom("104", RoomType.SINGLE));
+        _roomService.addRoom(new Room("101", 150.0d, RoomType.DOUBLE));
+        _roomService.addRoom(new Room("102", 75.0d, RoomType.SINGLE));
+        _roomService.addRoom(new Room("103", 200.0d, RoomType.DOUBLE));
+        _roomService.addRoom(new FreeRoom("104", RoomType.SINGLE));
 
-        _reservationService.addRoom(new Room("200", 175.0d, RoomType.SINGLE));
-        _reservationService.addRoom(new Room("210", 350.0d, RoomType.DOUBLE));
-        _reservationService.addRoom(new FreeRoom("215", RoomType.DOUBLE));
-        _reservationService.addRoom(new Room("265", 265.0d, RoomType.DOUBLE));
+        _roomService.addRoom(new Room("200", 175.0d, RoomType.SINGLE));
+        _roomService.addRoom(new Room("210", 350.0d, RoomType.DOUBLE));
+        _roomService.addRoom(new FreeRoom("215", RoomType.DOUBLE));
+        _roomService.addRoom(new Room("265", 265.0d, RoomType.DOUBLE));
     }
 }

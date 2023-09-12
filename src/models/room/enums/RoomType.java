@@ -10,7 +10,9 @@ public enum RoomType {
         this.label = label;
     }
 
-    public static RoomType valueOfLabel(String label) {
+    // This was picked after understanding on how to assign custom values
+    // to enums from this source https://www.baeldung.com/java-enum-values
+    public static RoomType getRoomTypeLabel(String label) {
         for (RoomType roomType : values()) {
             if (roomType.label.equals(label)) {
                 return roomType;

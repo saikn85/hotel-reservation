@@ -1,6 +1,3 @@
-import java.util.Collection;
-import java.util.Scanner;
-
 import api.AdminResource;
 import common.MainMenuOptions;
 import common.PatternPrinter;
@@ -10,9 +7,11 @@ import models.room.IRoom;
 import models.room.Room;
 import models.room.enums.RoomType;
 
+import java.util.Collection;
+import java.util.Scanner;
+
 public class AdministrativeMenu {
     private static final AdminResource _adminResource = AdminResource.getAdminResource();
-
     private boolean _isDataPopulated;
 
     public AdministrativeMenu() {
@@ -25,11 +24,8 @@ public class AdministrativeMenu {
         final Scanner scanner = new Scanner(System.in);
         do {
             try {
-                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
                 System.out.println();
-                System.out.println("Administravtive Menu");
-                System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
+                System.out.println("Administrative Menu");
                 System.out.println();
                 System.out.println("1.\tSee all Customers");
                 System.out.println("2.\tSee all Rooms");
@@ -38,51 +34,41 @@ public class AdministrativeMenu {
                 System.out.println("5.\tPopulate Data");
                 System.out.println("6.\tBack to Main Menu");
                 System.out.println("7.\tExit Application");
-                System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
+                System.out.print("\"Please select an option from the above (example 1): ");
                 switch (Integer.parseInt(scanner.next())) {
-                    case 1:
+                    case 1 -> {
                         userOption = 1;
                         this.listAllCustomers();
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         userOption = 2;
                         this.listAllRooms();
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         userOption = 3;
                         this.listAllReservations();
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         userOption = 4;
                         this.addNewRoom(scanner);
-                        break;
-                    case 5:
+                    }
+                    case 5 -> {
                         userOption = 5;
                         this.populateData();
-                        break;
-                    case 6:
-                        userOption = 6;
-                        break;
-                    case 7:
-                        userOption = 7;
-                        break;
-                    default:
-                        System.out.println();
-                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
+                    }
+                    case 6 -> userOption = 6;
+                    case 7 -> userOption = 7;
+                    default -> {
                         System.out.println();
                         System.out.println("Invalid option specified, try again.");
                         System.out.println();
-                        PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                        break;
+                    }
                 }
             } catch (NumberFormatException ex) {
                 userOption = 0;
                 System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                System.out.println();
                 System.out.println("Invalid option specified, try again.");
                 System.out.println();
-                PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
             } catch (Exception e) {
                 System.err.println(e);
                 userOption = 7; // Break away from Unknown Exception
@@ -95,8 +81,6 @@ public class AdministrativeMenu {
         return MainMenuOptions.EXIT;
     }
 
-    // #region listAllCustomers
-
     private void listAllCustomers() {
         Collection<Customer> customers = _adminResource.getAllCustomers();
         System.out.println();
@@ -105,20 +89,16 @@ public class AdministrativeMenu {
         } else {
             String format = String.format(Customer.getCustomerFormat(), "First Name", "Last Name", "Email");
             System.out.println(format);
-            PatternPrinter.printStars(Customer.getMaxCustomerLength());
+            PatternPrinter.printPattern("_", Customer.getMaxCustomerLength());
             for (Customer customer : customers) {
                 System.out.println(customer);
             }
 
             System.out.println();
-            PatternPrinter.printStars(Customer.getMaxCustomerLength());
+            PatternPrinter.printPattern(Customer.getMaxCustomerLength());
             System.out.println();
         }
     }
-
-    // #endregion
-
-    // #region listAllRooms
 
     private void listAllRooms() {
         Collection<IRoom> rooms = _adminResource.getAllRooms();
@@ -126,21 +106,17 @@ public class AdministrativeMenu {
         if (rooms.isEmpty()) {
             System.out.println("No Rooms found.");
         } else {
-            System.out.println(String.format(Room.getRoomFormat(), "Room Type", "Room Number", "Cost/Night $", "Beds"));
-            PatternPrinter.printStars(Room.getMaxRoomLength());
+            String format = String.format(Room.getRoomFormat(), "Room Type", "Room Number", "Cost/Night $", "Beds");
+            System.out.println(format);
+            PatternPrinter.printPattern("_", Room.getMaxRoomLength());
             for (IRoom room : rooms) {
                 System.out.println(room);
             }
 
-            System.out.println();
-            PatternPrinter.printStars(Room.getMaxRoomLength());
+            PatternPrinter.printPattern("_", Room.getMaxRoomLength());
             System.out.println();
         }
     }
-
-    // #endregion
-
-    // #region listAllReservations
 
     private void listAllReservations() {
         Collection<Reservation> reservations = _adminResource.getAllReservations();
@@ -148,22 +124,18 @@ public class AdministrativeMenu {
         if (reservations.isEmpty()) {
             System.out.println("No Reservations found.");
         } else {
-            System.out.println(String.format(Reservation.getReservationFormat(), "Customer Details",
-                    "Room Details", "Check-In Date", "Check-Out Date"));
-            PatternPrinter.printStars(Reservation.getMaxReservationLength());
+            String format = String.format(Reservation.getReservationFormat(), "Customer Details",
+                    "Room Details", "Check-In Date", "Check-Out Date");
+            System.out.println(format);
+            PatternPrinter.printPattern("_", Reservation.getMaxReservationLength());
             for (Reservation reservation : reservations) {
                 System.out.println(reservation);
             }
 
-            System.out.println();
-            PatternPrinter.printStars(Reservation.getMaxReservationLength());
+            PatternPrinter.printPattern("_", Reservation.getMaxReservationLength());
             System.out.println();
         }
     }
-
-    // #endregion
-
-    // #region addNewRoom
 
     private void addNewRoom(final Scanner scanner) {
         System.out.println();
@@ -182,8 +154,6 @@ public class AdministrativeMenu {
         System.out.println("Room added successfully!");
     }
 
-    // #region parseRoomPrice
-
     private double parseRoomPrice(final Scanner scanner) {
         try {
             return Double.parseDouble(scanner.next());
@@ -194,35 +164,21 @@ public class AdministrativeMenu {
         }
     }
 
-    // #endregion
-
-    // #region parseRoomType
-
     private RoomType parseRoomType(final Scanner scanner) {
         try {
-            return RoomType.valueOfLabel(scanner.next());
+            return RoomType.getRoomTypeLabel(scanner.next());
         } catch (IllegalArgumentException exp) {
-            System.out.println("Invalid room type! Please, choose 1 for single bed or 2 for double bed:");
+            System.out.print("Invalid room type! Please, choose 1 for single bed or 2 for double bed: ");
             return parseRoomType(scanner);
         }
     }
-
-    // #endregion
-
-    // #endregion
-
-    // #region populateData
 
     private void populateData() {
         if (!this._isDataPopulated) {
             this._isDataPopulated = true;
             _adminResource.populateApplicationData();
             System.out.println();
-            PatternPrinter.printStars(Customer.getMaxCustomerLength());
-            System.out.println();
             System.out.println("Data has been populated.");
-            System.out.println();
-            PatternPrinter.printStars(Customer.getMaxCustomerLength());
             System.out.println();
         } else {
             System.out.println();
@@ -230,6 +186,4 @@ public class AdministrativeMenu {
             System.out.println();
         }
     }
-
-    // #endregion
 }

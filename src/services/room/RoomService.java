@@ -7,13 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RoomService {
-    private static final  RoomService _SINGLETON = new RoomService();
+    private static final RoomService _SINGLETON = new RoomService();
     private final Map<String, IRoom> rooms = new HashMap<>();
 
     private RoomService() {
     }
 
-    public static RoomService getRoomService() {return _SINGLETON; }
+    public static RoomService getRoomService() {
+        return _SINGLETON;
+    }
 
     public void addRoom(final IRoom room) {
         rooms.put(room.getRoomNumber(), room);
