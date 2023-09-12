@@ -1,27 +1,34 @@
 package api;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-
 import models.customer.Customer;
 import models.reservation.Reservation;
 import models.room.IRoom;
 import services.customer.CustomerService;
 import services.reservation.ReservationService;
+import services.room.RoomService;
+
+import java.util.*;
 
 public class HotelResource {
+    //region Static Setup
+    private static final int _SEARCH_AHEAD_DAYS = 7;
     private static final HotelResource SINGLETON = new HotelResource();
+    //endregion
 
+    //region Services
     private final CustomerService _customerService = CustomerService.getCustomerService();
+    private final RoomService _roomService = RoomService.getRoomService();
     private final ReservationService _reservationService = ReservationService.getReservationService();
+    //endregion
 
+    //region Constructor
     private HotelResource() {
     }
 
     public static HotelResource getHotelResource() {
         return SINGLETON;
     }
+    //endregion
 
     public Customer getCustomer(String email) {
         return _customerService.getCustomer(email);
@@ -32,45 +39,45 @@ public class HotelResource {
     }
 
     public IRoom getRoom(String roomNumber) {
-        return _reservationService.getARoom(roomNumber);
+        return _roomService.getARoom(roomNumber);
     }
 
-    public Reservation bookRoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
-        return _reservationService.reserveRoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
+    public void bookRoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
+        _reservationService.reserveRoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
     }
 
     public Collection<Reservation> getCustomersReservations(String customerEmail) {
         final Customer customer = getCustomer(customerEmail);
-
         if (customer == null) {
             return Collections.emptyList();
         }
 
-        return _reservationService.getAllCustomerReservations(getCustomer(customerEmail));
+        Collection<Reservation> customerReservations = new ArrayList<>();
+        for (Reservation reservation: _reservationService.getAllReservations()) {
+            if(reservation.getCustomer().equals(customer))
+                customerReservations.add(reservation);
+        }
+
+        return customerReservations;
     }
 
     public Collection<IRoom> findRoom(final Date checkIn, final Date checkOut) {
         return _reservationService.findRooms(checkIn, checkOut);
     }
 
-    public Collection<IRoom> findAlternativeRooms(final Date checkIn, final Date checkOut) {
-        return _reservationService.findAlternateRooms(checkIn, checkOut);
-    }
-
-    public Collection<IRoom> findAlternativeRooms(final Date checkIn, final Date checkOut,
-            final int extendedSearchDays) {
-        return _reservationService.findAlternateRooms(checkIn, checkOut, extendedSearchDays);
-    }
-
     public Date getNextAlternateDate(final Date date) {
-        return _reservationService.getNextAlternateDate(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, _SEARCH_AHEAD_DAYS);
+
+        return calendar.getTime();
     }
 
     public Date getNextAlternateDate(final Date date, final int extendedSearchDays) {
-        return _reservationService.getNextAlternateDate(date, extendedSearchDays);
-    }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, extendedSearchDays);
 
-    public Collection<Reservation> getAllReservations() {
-        return _reservationService.getAllReservations();
+        return calendar.getTime();
     }
 }

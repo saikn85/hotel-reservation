@@ -34,7 +34,7 @@ public class AdministrativeMenu {
                 System.out.println("5.\tPopulate Data");
                 System.out.println("6.\tBack to Main Menu");
                 System.out.println("7.\tExit Application");
-                System.out.print("\"Please select an option from the above (example 1): ");
+                System.out.print("Please select an option from the above (example 1): ");
                 switch (Integer.parseInt(scanner.next())) {
                     case 1 -> {
                         userOption = 1;

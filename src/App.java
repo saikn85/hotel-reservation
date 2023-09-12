@@ -7,9 +7,6 @@ public class App {
         runApplication();
     }
 
-    /**
-     * Will be the starting point in the application
-     */
     private static void runApplication() {
         MainMenuOptions userOption;
         HotelMenu customerMenu = new HotelMenu();
