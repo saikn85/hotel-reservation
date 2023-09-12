@@ -197,6 +197,11 @@ public class HotelMenu {
             System.out.println();
             System.out.println("Reservation created successfully!");
         }
+        else{
+            System.out.println();
+            System.out.println("Room not available! " + userInRoomNumber);
+            processReservationLogic(scanner, checkIn, checkOut, customerEmail, rooms);
+        }
     }
     //endregion
 
