@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class HotelMenu {
-    //region Base Setup
+    // region Base Setup
     private static final HotelResource _hotelResource = HotelResource.getHotelResource();
 
     public HotelMenu() {
@@ -71,9 +71,9 @@ public class HotelMenu {
 
         return MainMenuOptions.EXIT;
     }
-    //endregion
+    // endregion
 
-    //region Find Rooms
+    // region Find Rooms
     private void findRooms(final Scanner scanner) {
         System.out.println();
         System.out.print("Do you have an account with us (y/n)? ");
@@ -94,7 +94,7 @@ public class HotelMenu {
             final Date checkOut = this.getInputDate(scanner);
 
             if (checkIn != null && checkOut != null) {
-                Collection<IRoom> availableRooms = _hotelResource.findRoom(checkIn, checkOut);
+                Collection<IRoom> availableRooms = _hotelResource.findRooms(checkIn, checkOut);
                 if (availableRooms.isEmpty()) {
                     processAlternateLogic(scanner, customerEmail, checkIn, checkOut);
                 } else {
@@ -127,23 +127,23 @@ public class HotelMenu {
     }
 
     private void processAlternateLogic(final Scanner scanner, final String customerEmail, final Date checkIn,
-                                       final Date checkOut) {
+            final Date checkOut) {
         Collection<IRoom> alternativeRooms;
         System.out.println();
         System.out.print("Do you wish to change the default extended search? (y/n)");
         final String extendSearchResp = scanner.next();
 
-        if (extendSearchResp.equalsIgnoreCase("n")) {
+        if (extendSearchResp.equalsIgnoreCase("y")) {
             final int days = getInputDays(scanner);
             final Date newCheckIn = _hotelResource.getNextAlternateDate(checkIn, days);
             final Date newCheckOut = _hotelResource.getNextAlternateDate(checkOut, days);
-            alternativeRooms = _hotelResource.findRoom(newCheckIn, newCheckOut);
+            alternativeRooms = _hotelResource.findRooms(newCheckIn, newCheckOut);
             processReservationLogic(scanner, newCheckIn, newCheckOut, customerEmail, alternativeRooms);
         }
 
         final Date newCheckIn = _hotelResource.getNextAlternateDate(checkIn);
         final Date newCheckOut = _hotelResource.getNextAlternateDate(checkOut);
-        alternativeRooms = _hotelResource.findRoom(newCheckIn, newCheckOut);
+        alternativeRooms = _hotelResource.findRooms(newCheckIn, newCheckOut);
         processReservationLogic(scanner, newCheckIn, newCheckOut, customerEmail, alternativeRooms);
     }
 
@@ -202,9 +202,9 @@ public class HotelMenu {
             processReservationLogic(scanner, checkIn, checkOut, customerEmail, rooms);
         }
     }
-    //endregion
+    // endregion
 
-    //region Get User Reservation
+    // region Get User Reservation
     private void getMyReservations(final Scanner scanner) {
         System.out.println();
         System.out.print("Enter your Email format: name@domain.com: ");
@@ -227,9 +227,9 @@ public class HotelMenu {
             System.out.println();
         }
     }
-    //endregion
+    // endregion
 
-    //region Create User Account
+    // region Create User Account
     private void createUserAccount(Scanner scanner) {
         System.out.println();
         System.out.print("Enter Email format: name@domain.com: ");
@@ -249,9 +249,9 @@ public class HotelMenu {
             this.createUserAccount(scanner);
         }
     }
-    //endregion
+    // endregion
 
-    //region Private Helper
+    // region Private Helper
     private Date getInputDate(final Scanner scanner) {
         try {
             return new SimpleDateFormat("MM/dd/yyyy").parse(scanner.next());
@@ -277,5 +277,5 @@ public class HotelMenu {
 
         return days;
     }
-    //endregion
+    // endregion
 }

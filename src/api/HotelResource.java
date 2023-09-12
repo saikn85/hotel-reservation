@@ -10,27 +10,27 @@ import services.room.RoomService;
 import java.util.*;
 
 public class HotelResource {
-    //region Static Setup
+    // region Static Setup
     private static final int _SEARCH_AHEAD_DAYS = 7;
     private static final HotelResource SINGLETON = new HotelResource();
-    //endregion
+    // endregion
 
-    //region Services
+    // region Services
     private final CustomerService _customerService = CustomerService.getCustomerService();
     private final RoomService _roomService = RoomService.getRoomService();
     private final ReservationService _reservationService = ReservationService.getReservationService();
-    //endregion
+    // endregion
 
-    //region Constructor
+    // region Constructor
     private HotelResource() {
     }
 
     public static HotelResource getHotelResource() {
         return SINGLETON;
     }
-    //endregion
+    // endregion
 
-    //region Public Methods
+    // region Public Methods
     public Customer getCustomer(String email) {
         return _customerService.getCustomer(email);
     }
@@ -54,15 +54,15 @@ public class HotelResource {
         }
 
         Collection<Reservation> customerReservations = new ArrayList<>();
-        for (Reservation reservation: _reservationService.getAllReservations()) {
-            if(reservation.getCustomer().equals(customer))
+        for (Reservation reservation : _reservationService.getAllReservations()) {
+            if (reservation.getCustomer().equals(customer))
                 customerReservations.add(reservation);
         }
 
         return customerReservations;
     }
 
-    public Collection<IRoom> findRoom(final Date checkIn, final Date checkOut) {
+    public Collection<IRoom> findRooms(final Date checkIn, final Date checkOut) {
         return _reservationService.findRooms(checkIn, checkOut);
     }
 
@@ -81,5 +81,5 @@ public class HotelResource {
 
         return calendar.getTime();
     }
-    //endregion
+    // endregion
 }
