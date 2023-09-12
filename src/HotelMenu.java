@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import api.HotelResource;
 import common.MainMenuOptions;
-import common.MenuOptionsHelpers;
 import common.PatternPrinter;
 import models.reservation.Reservation;
 import models.room.IRoom;
@@ -80,7 +79,7 @@ public class HotelMenu {
         } while (userOption != 4 && userOption != 5);
 
         if (userOption == 4)
-            return MainMenuOptions.TRYAGAIN;
+            return MainMenuOptions.TRY_AGAIN;
 
         return MainMenuOptions.EXIT;
     }
@@ -256,14 +255,14 @@ public class HotelMenu {
             System.out.println();
             System.out.println(String.format(Reservation.getReservationFormat(), "Customer Details", "Room Details",
                     "Check-In Date", "Check-Out Date"));
-            PatternPrinter.printStars(Reservation.getMaxReservationLenght());
+            PatternPrinter.printStars(Reservation.getMaxReservationLength());
 
             for (Reservation reservation : reservations) {
                 System.out.println(reservation);
             }
 
             System.out.println();
-            PatternPrinter.printStars(Reservation.getMaxReservationLenght());
+            PatternPrinter.printStars(Reservation.getMaxReservationLength());
             System.out.println();
         }
     }

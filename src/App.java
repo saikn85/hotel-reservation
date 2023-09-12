@@ -1,18 +1,17 @@
 import java.util.Scanner;
 import common.MainMenuOptions;
-import common.MenuOptionsHelpers;
 import common.PatternPrinter;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         runApplication();
     }
 
     /**
-     * Will be the strating point in the application
+     * Will be the starting point in the application
      */
     private static void runApplication() {
-        MainMenuOptions userOption = MainMenuOptions.EXIT;
+        MainMenuOptions userOption;
 
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
         PatternPrinter.printStars(MenuOptionsHelpers.getMainMenuOptLength());
@@ -32,29 +31,25 @@ public class App {
                     System.out.println("3.\tExit");
                     System.out.print(MenuOptionsHelpers.getSelectionOptionHelper());
                     switch (Integer.parseInt(scanner.next())) {
-                        case 1:
-                            userOption = customerMenu.hotelMenuOptions();
-                            break;
-                        case 2:
-                            userOption = adminMenu.adminMenuOptions();
-                            break;
-                        case 3:
+                        case 1 -> userOption = customerMenu.hotelMenuOptions();
+                        case 2 -> userOption = adminMenu.adminMenuOptions();
+                        case 3 -> {
                             scanner.close();
                             userOption = MainMenuOptions.EXIT;
                             System.out.println("Exited");
-                            break;
-                        default:
-                            userOption = MainMenuOptions.TRYAGAIN;
+                        }
+                        default -> {
+                            userOption = MainMenuOptions.TRY_AGAIN;
                             System.out.println();
                             PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
                             System.out.println();
                             System.out.println("Invalid option specified, try again.");
                             System.out.println();
                             PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
-                            break;
+                        }
                     }
                 } catch (NumberFormatException ex) {
-                    userOption = MainMenuOptions.TRYAGAIN;
+                    userOption = MainMenuOptions.TRY_AGAIN;
                     System.out.println();
                     PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
                     System.out.println();
@@ -62,12 +57,10 @@ public class App {
                     System.out.println();
                     PatternPrinter.printStars(MenuOptionsHelpers.getSelectionOptLength());
                 } catch (Exception e) {
-                    System.err.println("Exception Occured :: " + e.getMessage() + " :: " + e.getClass());
+                    System.err.println("Exception Occurred :: " + e.getMessage() + " :: " + e.getClass());
                     return;
                 }
             } while (userOption != MainMenuOptions.EXIT);
         }
-
-        return;
     }
 }

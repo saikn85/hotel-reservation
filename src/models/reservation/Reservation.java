@@ -9,13 +9,9 @@ import models.room.Room;
 
 public class Reservation {
 
-    // #region Static Setup
-
-    private static int _maxReservationLenght = 0;
-    private static String _reservationFormat = "%" + Customer.getMaxCustomerLenght() + "s | %"
+    private static int _maxReservationLength = 0;
+    private static String _reservationFormat = "%" + Customer.getMaxCustomerLength() + "s | %"
             + Room.getMaxRoomLength() + "s | %13s | %14s";
-
-    // #endregion
 
     private final Customer _customer;
     private final IRoom _room;
@@ -34,8 +30,6 @@ public class Reservation {
         this.computeLength();
     }
 
-    // #region Getters
-
     public IRoom getRoom() {
         return this._room;
     }
@@ -48,42 +42,31 @@ public class Reservation {
         return this._checkOutDate;
     }
 
-    public static int getMaxReservationLenght() {
-        return Reservation._maxReservationLenght;
+    public static int getMaxReservationLength() {
+        return Reservation._maxReservationLength;
     }
 
     public static String getReservationFormat() {
-        _reservationFormat = "%" + Customer.getMaxCustomerLenght() + "s | %"
-                + Room.getMaxRoomLength() + "s | %13s | %14s";
         return Reservation._reservationFormat;
     }
 
-    // #endregion
-
-    // #region Override(s)
-
     @Override
     public String toString() {
-        String customer = this._customer.toString();
-        String room = this._room.toString();
-        return String.format(Reservation._reservationFormat, customer, room,
+        return String.format(Reservation._reservationFormat, this._customer, this._room,
                 Reservation.getFormattedDate(this._checkInDate),
                 Reservation.getFormattedDate(this._checkOutDate));
     }
 
-    // #endregion
-
-    // #region Pirvate Helpers
-
     private void computeLength() {
-        int sum = Customer.getMaxCustomerLenght() + Room.getMaxRoomLength() + 27;
-        if (sum > Reservation._maxReservationLenght)
-            Reservation._maxReservationLenght = sum + 9;
+        Reservation._reservationFormat = "%" + Customer.getMaxCustomerLength() + "s | %"
+                + Room.getMaxRoomLength() + "s | %13s | %14s";
+
+        int sum = Customer.getMaxCustomerLength() + Room.getMaxRoomLength() + 27;
+        if (sum > Reservation.getMaxReservationLength())
+            Reservation._maxReservationLength = sum + 9;
     }
 
     private static String getFormattedDate(final Date date) {
         return new SimpleDateFormat("yyyy-mm-dd").format(date);
     }
-
-    // #endregion
 }

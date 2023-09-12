@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 import api.AdminResource;
 import common.MainMenuOptions;
-import common.MenuOptionsHelpers;
 import common.PatternPrinter;
 import models.customer.Customer;
 import models.reservation.Reservation;
@@ -91,7 +90,7 @@ public class AdministrativeMenu {
         } while (userOption != 6 && userOption != 7);
 
         if (userOption == 6)
-            return MainMenuOptions.TRYAGAIN;
+            return MainMenuOptions.TRY_AGAIN;
 
         return MainMenuOptions.EXIT;
     }
@@ -106,13 +105,13 @@ public class AdministrativeMenu {
         } else {
             String format = String.format(Customer.getCustomerFormat(), "First Name", "Last Name", "Email");
             System.out.println(format);
-            PatternPrinter.printStars(Customer.getMaxCustomerLenght());
+            PatternPrinter.printStars(Customer.getMaxCustomerLength());
             for (Customer customer : customers) {
                 System.out.println(customer);
             }
 
             System.out.println();
-            PatternPrinter.printStars(Customer.getMaxCustomerLenght());
+            PatternPrinter.printStars(Customer.getMaxCustomerLength());
             System.out.println();
         }
     }
@@ -151,13 +150,13 @@ public class AdministrativeMenu {
         } else {
             System.out.println(String.format(Reservation.getReservationFormat(), "Customer Details",
                     "Room Details", "Check-In Date", "Check-Out Date"));
-            PatternPrinter.printStars(Reservation.getMaxReservationLenght());
+            PatternPrinter.printStars(Reservation.getMaxReservationLength());
             for (Reservation reservation : reservations) {
                 System.out.println(reservation);
             }
 
             System.out.println();
-            PatternPrinter.printStars(Reservation.getMaxReservationLenght());
+            PatternPrinter.printStars(Reservation.getMaxReservationLength());
             System.out.println();
         }
     }
@@ -219,11 +218,11 @@ public class AdministrativeMenu {
             this._isDataPopulated = true;
             _adminResource.populateApplicationData();
             System.out.println();
-            PatternPrinter.printStars(Customer.getMaxCustomerLenght());
+            PatternPrinter.printStars(Customer.getMaxCustomerLength());
             System.out.println();
             System.out.println("Data has been populated.");
             System.out.println();
-            PatternPrinter.printStars(Customer.getMaxCustomerLenght());
+            PatternPrinter.printStars(Customer.getMaxCustomerLength());
             System.out.println();
         } else {
             System.out.println();

@@ -4,5 +4,5 @@ public enum MainMenuOptions {
     CUSTOMER,
     ADMIN,
     EXIT,
-    TRYAGAIN
+    TRY_AGAIN
 }

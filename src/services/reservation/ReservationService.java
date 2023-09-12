@@ -14,8 +14,6 @@ import models.room.IRoom;
 public class ReservationService {
     private static final ReservationService SINGLETON = new ReservationService();
     private static final int SEARCH_AHEAD_DAYS = 7;
-
-    private final Map<String, IRoom> rooms = new HashMap<>();
     private final Map<String, Collection<Reservation>> reservations = new HashMap<>();
 
     private ReservationService() {
@@ -25,20 +23,8 @@ public class ReservationService {
         return SINGLETON;
     }
 
-    public void addRoom(final IRoom room) {
-        rooms.put(room.getRoomNumber(), room);
-    }
-
-    public IRoom getARoom(final String roomNumber) {
-        return rooms.get(roomNumber);
-    }
-
-    public Collection<IRoom> getAllRooms() {
-        return rooms.values();
-    }
-
     public Reservation reserveRoom(final Customer customer, final IRoom room, final Date checkInDate,
-            final Date checkOutDate) {
+                                   final Date checkOutDate) {
         final Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
 
         Collection<Reservation> customerReservations = getAllCustomerReservations(customer);
@@ -62,7 +48,7 @@ public class ReservationService {
     }
 
     public Collection<IRoom> findAlternateRooms(final Date checkInDate, final Date checkOutDate,
-            final int extendedSearchDays) {
+                                                final int extendedSearchDays) {
         return findAllAvailableRooms(getNextAlternateDate(checkInDate, extendedSearchDays),
                 getNextAlternateDate(checkOutDate, extendedSearchDays));
     }
@@ -103,7 +89,7 @@ public class ReservationService {
         final Collection<Reservation> allReservations = getAllReservations();
         final Collection<IRoom> roomsNotAvailable = new ArrayList<>();
         final Collection<IRoom> roomsAvailable = new ArrayList<>();
-        
+
         for (Reservation reservation : allReservations) {
             if (checkForReservationOverlaps(reservation, checkInDate, checkOutDate)) {
                 roomsNotAvailable.add(reservation.getRoom());
@@ -121,10 +107,8 @@ public class ReservationService {
     }
 
     private boolean checkForReservationOverlaps(final Reservation reservation, final Date checkInDate,
-            final Date checkOutDate) {
+                                                final Date checkOutDate) {
         return checkInDate.before(reservation.getCheckOutDate())
                 && checkOutDate.after(reservation.getCheckInDate());
     }
-
-    // #endregion
 }

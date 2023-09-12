@@ -5,13 +5,9 @@ import models.room.enums.RoomType;
 
 public class Room implements IRoom {
 
-    // #region Static Setup
-
     private static int _maxRoomNumLength = 11;
     private static int _maxRoomLength = 0;
-    private static String _roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %14s | %s";
-
-    // #endregion
+    private static String _roomFormat = "%s => %" + Room.getMaxRoomNumLength() + "s | %14s | %s";
 
     private final String _roomNumber;
     private final Double _price;
@@ -45,7 +41,7 @@ public class Room implements IRoom {
         return this._price != null && this._price.equals(0.0d);
     }
 
-    public static int getmaxRoomNumLength() {
+    public static int getMaxRoomNumLength() {
         return Room._maxRoomNumLength;
     }
 
@@ -54,17 +50,11 @@ public class Room implements IRoom {
     }
 
     public static String getRoomFormat() {
-        Room._roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %14s | %s";
         return Room._roomFormat;
     }
 
-    // #endregion
-
-    // #region Override(s)
-
     @Override
     public String toString() {
-        Room._roomFormat = "%s => %" + Room.getmaxRoomNumLength() + "s | %14s | %s";
         return String.format(Room._roomFormat, "Paid Room", this._roomNumber,
                 String.format("%12.2f", this._price), this._roomType);
     }
@@ -75,11 +65,10 @@ public class Room implements IRoom {
             return true;
         }
 
-        if (!(obj instanceof Room)) {
+        if (!(obj instanceof Room room)) {
             return false;
         }
 
-        final Room room = (Room) obj;
         return Objects.equals(this._roomNumber, room._roomNumber);
     }
 
@@ -88,18 +77,14 @@ public class Room implements IRoom {
         return Objects.hash(this._roomNumber);
     }
 
-    // #endregion
-
-    // #region Private Helpers
-
     private void computeLength() {
         if (this._roomNumber.length() > Room._maxRoomNumLength)
             Room._maxRoomNumLength = this._roomNumber.length();
+
+        Room._roomFormat = "%s => %" + Room.getMaxRoomNumLength() + "s | %14s | %s";
 
         int sum = 13 + Room._maxRoomNumLength + 20;
         if (sum > Room._maxRoomLength)
             Room._maxRoomLength = sum + 6;
     }
-
-    // #endregion
 }

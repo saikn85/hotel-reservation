@@ -2,17 +2,13 @@ package models.customer;
 
 public class Customer {
 
-    // #region Static Setup
-
     private static int _maxFirstNameLength = 10;
     private static int _maxLastNameLength = 9;
     private static int _maxEmailLength = 0;
-    private static int _maxCustomerLenght = 0;
+    private static int _maxCustomerLength = 0;
     private static String _customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
             + Customer.getMaxLastNameLength() + "s | %"
             + Customer.getMaxEmailLength() + "s";
-
-    // #endregion
 
     private final String _firstName;
     private final String _lastName;
@@ -25,12 +21,10 @@ public class Customer {
         this._lastName = lastName;
         this._email = email;
 
-        this.computeLenghts();
+        this.computeLengths();
     }
 
-    // #region Getters
-
-    public String getEmail() {
+    public final String getEmail() {
         return this._email;
     }
 
@@ -46,34 +40,20 @@ public class Customer {
         return Customer._maxEmailLength;
     }
 
-    public static int getMaxCustomerLenght() {
-        return Customer._maxCustomerLenght;
+    public static int getMaxCustomerLength() {
+        return Customer._maxCustomerLength;
     }
 
     public static String getCustomerFormat() {
-        Customer._customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
-                + Customer.getMaxLastNameLength() + "s | %"
-                + Customer.getMaxEmailLength() + "s";
         return Customer._customerFormat;
     }
 
-    // #endregion
-
-    // #region Override(s)
-
     @Override
     public String toString() {
-        Customer._customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
-                + Customer.getMaxLastNameLength() + "s | %"
-                + Customer.getMaxEmailLength() + "s";
-        return String.format(Customer._customerFormat, this._firstName, this._lastName, this._email);
+        return String.format(Customer.getCustomerFormat(), this._firstName, this._lastName, this._email);
     }
 
-    // #endregion
-
-    // #region Private Helpers
-
-    private void computeLenghts() {
+    private void computeLengths() {
 
         if (this._firstName.length() > Customer._maxFirstNameLength)
             Customer._maxFirstNameLength = this._firstName.length();
@@ -84,11 +64,13 @@ public class Customer {
         if (this._email.length() > Customer._maxEmailLength)
             Customer._maxEmailLength = this._email.length();
 
+        _customerFormat = "%" + Customer.getMaxFirstNameLength() + "s | %"
+                + Customer.getMaxLastNameLength() + "s | %"
+                + Customer.getMaxEmailLength() + "s";
+
         int sum = Customer._maxFirstNameLength + Customer._maxLastNameLength + Customer._maxEmailLength;
-        if (sum > Customer._maxCustomerLenght) {
-            Customer._maxCustomerLenght = sum + 6;
+        if (sum > Customer._maxCustomerLength) {
+            Customer._maxCustomerLength = sum + 6;
         }
     }
-
-    // #endregion
 }
