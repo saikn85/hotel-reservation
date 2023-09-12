@@ -1,20 +1,15 @@
 package services.reservation;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import models.customer.Customer;
 import models.reservation.Reservation;
 import models.room.IRoom;
 
+import java.util.*;
+
 public class ReservationService {
     private static final ReservationService SINGLETON = new ReservationService();
     private static final int SEARCH_AHEAD_DAYS = 7;
-    private final Map<String, Collection<Reservation>> reservations = new HashMap<>();
+    private final Set<Reservation> reservations = new HashSet<>();
 
     private ReservationService() {
     }
@@ -26,7 +21,6 @@ public class ReservationService {
     public Reservation reserveRoom(final Customer customer, final IRoom room, final Date checkInDate,
                                    final Date checkOutDate) {
         final Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
-
         Collection<Reservation> customerReservations = getAllCustomerReservations(customer);
 
         if (customerReservations == null) {
@@ -45,7 +39,6 @@ public class ReservationService {
 
     public Collection<Reservation> getAllReservations() {
         final Collection<Reservation> allReservations = new ArrayList<>();
-
         for (Collection<Reservation> reservations : reservations.values()) {
             allReservations.addAll(reservations);
         }

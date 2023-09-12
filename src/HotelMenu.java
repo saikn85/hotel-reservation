@@ -130,7 +130,7 @@ public class HotelMenu {
         System.out.print("Would you like to extend the serach? y/n: ");
         final String search = scanner.next();
 
-        if ("y".equals(search.toLowerCase())) {
+        if ("y".equalsIgnoreCase(search)) {
             System.out.print("\nEnter the number of look ahead days: ");
             final String searchDays = scanner.next();
             try {
@@ -173,11 +173,11 @@ public class HotelMenu {
         System.out.print("Would you like to book a Room? y/n: ");
         final String bookRoom = scanner.next();
 
-        if ("y".equals(bookRoom.toLowerCase())) {
+        if ("y".equalsIgnoreCase(bookRoom)) {
             System.out.print("\nDo you have an account with us? y/n: ");
             final String haveAccount = scanner.next();
 
-            if ("y".equals(haveAccount.toLowerCase())) {
+            if ("y".equalsIgnoreCase(haveAccount)) {
                 System.out.print("\nEnter Email format: name@domain.com: ");
                 final String customerEmail = scanner.next();
 
@@ -208,7 +208,7 @@ public class HotelMenu {
             } else {
                 System.out.println("Please, create an account.");
             }
-        } else if ("n".equals(bookRoom.toLowerCase())) {
+        } else if ("n".equalsIgnoreCase(bookRoom)) {
             return;
         } else {
             this.makeReservation(scanner, checkInDate, checkOutDate, rooms);
@@ -225,7 +225,7 @@ public class HotelMenu {
             System.out.println("No rooms found.");
         } else {
             System.out.println();
-            System.out.println(String.format(Room.getRoomFormat(), "Room Type", "Room Number", "Cost/Night $", "Beds"));
+            System.out.printf((Room.getRoomFormat()) + "%n", "Room Type", "Room Number", "Cost/Night $", "Beds");
             PatternPrinter.printPattern(Room.getMaxRoomLength());
             for (IRoom room : rooms) {
                 System.out.println(room);
@@ -295,7 +295,7 @@ public class HotelMenu {
 
     // #region getInputDate
 
-    private Date getInputDate(final Scanner scanner) {
+    private Date   getInputDate(final Scanner scanner) {
         try {
             return new SimpleDateFormat("MM/dd/yyyy").parse(scanner.next());
         } catch (ParseException ex) {
