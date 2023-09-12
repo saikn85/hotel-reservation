@@ -23,9 +23,9 @@ public class Customer {
     public Customer(final String firstName, final String lastName, final String email) {
         super();
 
-        this._firstName = firstName;
-        this._lastName = lastName;
-        this._email = email;
+        _firstName = firstName;
+        _lastName = lastName;
+        _email = email;
 
         this.computeLengths();
     }
@@ -35,15 +35,19 @@ public class Customer {
     public static int getMaxFirstNameLength() {
         return Customer._maxFirstNameLength;
     }
+
     public static int getMaxLastNameLength() {
         return Customer._maxLastNameLength;
     }
+
     public static int getMaxEmailLength() {
         return Customer._maxEmailLength;
     }
+
     public static int getMaxCustomerLength() {
         return Customer._maxCustomerLength;
     }
+
     public static String getCustomerFormat() {
         return Customer._customerFormat;
     }
@@ -78,7 +82,6 @@ public class Customer {
 
     //region Private Helpers
     private void computeLengths() {
-
         if (this._firstName.length() > Customer._maxFirstNameLength)
             Customer._maxFirstNameLength = this._firstName.length();
 

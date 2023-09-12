@@ -7,16 +7,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RoomService {
+    //region Static Setup
     private static final RoomService _SINGLETON = new RoomService();
     private final Map<String, IRoom> rooms = new HashMap<>();
+    //endregion
 
+    //region Constructor
     private RoomService() {
     }
 
     public static RoomService getRoomService() {
         return _SINGLETON;
     }
+    //endregion
 
+    //region Public Methods
     public void addRoom(final IRoom room) {
         rooms.put(room.getRoomNumber(), room);
     }
@@ -28,4 +33,5 @@ public class RoomService {
     public Collection<IRoom> getAllRooms() {
         return rooms.values();
     }
+    //endregion
 }

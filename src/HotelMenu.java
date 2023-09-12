@@ -98,13 +98,15 @@ public class HotelMenu {
                 if (availableRooms.isEmpty()) {
                     processAlternateLogic(scanner, customerEmail, checkIn, checkOut);
                 } else {
-                    processReservationLogic(scanner, checkIn, checkOut, customerEmail,availableRooms);
+                    processReservationLogic(scanner, checkIn, checkOut, customerEmail, availableRooms);
                 }
             } else {
                 System.out.println();
                 System.out.println("Failed to parse dates, retry!");
                 findRooms(scanner);
             }
+
+            return;
         }
 
         // When they don't have an account
@@ -120,7 +122,7 @@ public class HotelMenu {
         }
 
         System.out.println();
-        System.out.print("Invalid Option, retry!");
+        System.out.print("Invalid Option, retry - enter y (yes) or n (No)!");
         findRooms(scanner);
     }
 
@@ -161,13 +163,13 @@ public class HotelMenu {
         System.out.println();
         String roomFmt = String.format(Room.getRoomFormat(), "Room Type", "Room Number", "Cost/Night $", "Beds");
         System.out.println(roomFmt);
-        PatternPrinter.printPattern(Room.getMaxRoomLength());
+        PatternPrinter.printPattern("_", Room.getMaxRoomLength());
         for (IRoom room : rooms) {
             System.out.println(room);
         }
 
         System.out.println();
-        PatternPrinter.printPattern(Room.getMaxRoomLength());
+        PatternPrinter.printPattern("_", Room.getMaxRoomLength());
         System.out.println();
 
         System.out.print("Would you like to book a Room? y/n: ");
@@ -211,13 +213,13 @@ public class HotelMenu {
             System.out.println();
             System.out.printf((Reservation.getReservationFormat()) + "%n", "Customer Details", "Room Details",
                     "Check-In Date", "Check-Out Date");
-            PatternPrinter.printPattern(Reservation.getMaxReservationLength());
+            PatternPrinter.printPattern("_", Reservation.getMaxReservationLength());
             for (Reservation reservation : reservations) {
                 System.out.println(reservation);
             }
 
             System.out.println();
-            PatternPrinter.printPattern(Reservation.getMaxReservationLength());
+            PatternPrinter.printPattern("_", Reservation.getMaxReservationLength());
             System.out.println();
         }
     }

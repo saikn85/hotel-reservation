@@ -95,7 +95,7 @@ public class AdministrativeMenu {
             }
 
             System.out.println();
-            PatternPrinter.printPattern(Customer.getMaxCustomerLength());
+            PatternPrinter.printPattern("_",Customer.getMaxCustomerLength());
             System.out.println();
         }
     }

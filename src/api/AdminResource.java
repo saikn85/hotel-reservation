@@ -13,18 +13,23 @@ import services.reservation.ReservationService;
 import services.room.RoomService;
 
 public class AdminResource {
+    //region Static Setup
     private static final AdminResource SINGLETON = new AdminResource();
     private final CustomerService _customerService = CustomerService.getCustomerService();
     private final RoomService _roomService = RoomService.getRoomService();
     private final ReservationService _reservationService = ReservationService.getReservationService();
+    //endregion
 
+    //region Constructor
     private AdminResource() {
     }
 
     public static AdminResource getAdminResource() {
         return SINGLETON;
     }
+    //endregion
 
+    //region Public Methods
     public Customer getCustomer(String email) {
         return _customerService.getCustomer(email);
     }
@@ -62,4 +67,5 @@ public class AdminResource {
         _roomService.addRoom(new FreeRoom("215", RoomType.DOUBLE));
         _roomService.addRoom(new Room("265", 265.0d, RoomType.DOUBLE));
     }
+    //endregion
 }

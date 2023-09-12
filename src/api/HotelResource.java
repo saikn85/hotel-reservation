@@ -30,6 +30,7 @@ public class HotelResource {
     }
     //endregion
 
+    //region Public Methods
     public Customer getCustomer(String email) {
         return _customerService.getCustomer(email);
     }
@@ -80,4 +81,5 @@ public class HotelResource {
 
         return calendar.getTime();
     }
+    //endregion
 }
